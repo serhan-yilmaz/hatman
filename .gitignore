@@ -18,6 +18,12 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Netbeans Project
+/nbproject/*
+/build/*
+/dist/README.TXT
+build.xml
+
 # =========================
 # Operating System Files
 # =========================
