@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.game.block;
 
+import hatman.game.block.Block;
 import hatman.mapsolver.Node;
 import hatman.mapsolver.Path;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public abstract class ConcreteBlock extends Block{
     protected Path path = null;
@@ -25,6 +26,7 @@ public abstract class ConcreteBlock extends Block{
     
     @Override
     public void cycle(){
+        Path path = this.path;
         double remain = speed;
         if(path != null){
             while(remain > 0 && !path.isEmpty()){

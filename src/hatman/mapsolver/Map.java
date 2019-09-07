@@ -15,7 +15,7 @@ import hatman.mapsolver.FibonacciHeap.Entry;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Map {
     public static final int QUANTIZATION_FACTOR = 10;

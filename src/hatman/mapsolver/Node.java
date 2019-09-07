@@ -9,7 +9,7 @@ import hatman.mapsolver.FibonacciHeap.Entry;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Node {
     private final int x;

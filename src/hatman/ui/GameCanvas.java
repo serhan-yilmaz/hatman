@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.ui;
 
+import hatman.game.GameEnvironment;
 import sygfx.ScaledGraphics;
 import sygfx.ui.Container;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class GameCanvas extends Container {
     private GameEnvironment game;

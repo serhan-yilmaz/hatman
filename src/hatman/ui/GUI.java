@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.ui;
 
+import hatman.game.GameEnvironment;
 import javax.swing.JFrame;
 import sygfx.ui.JCanvas;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class GUI {
 //    private static GraphicsDevice device = GraphicsEnvironment
@@ -40,6 +41,7 @@ public class GUI {
         f.add(jcanvas);
         CanvasDesigner.design(jcanvas, game, controller);
         f.pack();
+        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         f.setLocationRelativeTo(null);
         repaintThread.setRepaintPeriod(20);
         repaintThread.start();

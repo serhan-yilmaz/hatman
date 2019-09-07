@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Path {
     

@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class NodeComparator implements Comparator<Node> {
 

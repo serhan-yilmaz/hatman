@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.ui;
 
 import sygfx.ui.JCanvas;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class PaintThread extends Thread{
     private final JCanvas canvas;

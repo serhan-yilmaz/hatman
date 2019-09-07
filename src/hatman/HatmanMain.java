@@ -5,6 +5,7 @@
  */
 package hatman;
 
+import hatman.ui.GUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +29,7 @@ public class HatmanMain {
             try {
                 Thread.sleep(20);
             } catch (InterruptedException ex) {
-                Logger.getLogger(MapSolver.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(HatmanMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             gui.cycle();
             if (heaptimer >= 5) {

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.ui;
 
+import hatman.game.GameEnvironment;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -14,11 +15,10 @@ import sygfx.Scale;
 import sygfx.ui.JCanvas;
 import sygfx.ui.Window;
 import sygfx.ui.layout.FlowLayout;
-import sygfx.ui.layout.FreeLayout;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class CanvasDesigner {
     

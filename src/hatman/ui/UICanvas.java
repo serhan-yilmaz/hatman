@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman;
+package hatman.ui;
 
+import hatman.game.GameEnvironment;
 import java.awt.Color;
 import java.awt.Font;
 import sygfx.ScaledGraphics;
@@ -12,7 +13,7 @@ import sygfx.ui.Container;
 
 /**
  *
- * @author Serhan
+ * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class UICanvas extends Container{
     private GameEnvironment game;
