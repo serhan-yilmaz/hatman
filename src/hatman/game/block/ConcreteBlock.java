@@ -16,8 +16,8 @@ import hatman.mapsolver.Path;
 public abstract class ConcreteBlock extends Block{
     protected Path path = null;
     
-    public ConcreteBlock(double x, double y, double speed) {
-        super(x, y, speed);
+    public ConcreteBlock(double x, double y, double speed, double radius) {
+        super(x, y, speed, radius);
     }
     
     public final synchronized void move(Path p){
