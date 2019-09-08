@@ -6,6 +6,8 @@
 package hatman;
 
 import hatman.ui.GUI;
+import hatman.util.UnorderedArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +21,27 @@ public class HatmanMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        UnorderedArrayList<Integer> array = new UnorderedArrayList();
+        
+        for(int i = 0; i < 10; i++){
+            array.add(i);
+        }
+        
+        Iterator<Integer> it = array.iterator();
+        
+        while(it.hasNext()){
+            double d = it.next();
+            if(d == 2 || d == 5 || d == 7){
+                it.remove();
+            }
+            System.out.println(d);
+        }
+        
+        for(int i : array){
+            System.out.println(i);
+        }
+        
+        
         GUI gui = new GUI();
         gui.setVisible();
         double realtime = 0;
