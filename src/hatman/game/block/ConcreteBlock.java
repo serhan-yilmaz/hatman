@@ -5,7 +5,6 @@
  */
 package hatman.game.block;
 
-import hatman.game.block.Block;
 import hatman.mapsolver.Node;
 import hatman.mapsolver.Path;
 

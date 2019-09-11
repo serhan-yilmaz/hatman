@@ -24,10 +24,12 @@ public class Hatman extends ConcreteBlock{
     @Override
     public void draw(ScaledGraphics sg) {
         Path path = this.path;
+        int x = this.getX();
+        int y = this.getY();
         int radius = (int) this.radius;
         sg.setColor(Color.red);
         if(path != null){
-            Node previous = new Node(getX(),getY());
+            Node previous = new Node(x, y);
             for(Node n : path.getPath()){
                 if(previous != null){
                     sg.fillOval(n.getX(), n.getY(), 6, 6);
@@ -38,7 +40,7 @@ public class Hatman extends ConcreteBlock{
         }
         sg.setColor(Color.orange);
         sg.setAnchor(Anchor.CENTER);
-        sg.fillOval(getX(), getY(), 2 * radius, 2 * radius);
+        sg.fillOval(x, y, 2 * radius, 2 * radius);
     }
     
     public int getEstimatedPathCost(){

@@ -39,5 +39,5 @@ public class RedBall extends Block{
     
     public boolean isTargetReached(){
         return getDistanceTo(target.x, target.y) < (radius + target.radius);
-    }    
+    }
 }
