@@ -86,17 +86,16 @@ public class GameEnvironment {
         Spawner redballspawner = new Spawner();
         redballspawner.addSpawner(new RedBallSpawner (100, 60, prototype));
         redballspawner.addSpawner(new RedBallSpawner (2360, 60, prototype));
-        redballspawner.addSpawner(new RedBallSpawner (100, 1280, prototype));
-        redballspawner.addSpawner(new RedBallSpawner (2360, 1280, prototype));
+        redballspawner.addSpawner(new RedBallSpawner (100, 1380, prototype));
+        redballspawner.addSpawner(new RedBallSpawner (2360, 1380, prototype));
         redballspawner.setSpawnPeriod(300);
         
         gameElements.addVisuals(new Visual(100, 60, 50));
         gameElements.addVisuals(new Visual(2360, 60, 50));
-        gameElements.addVisuals(new Visual(100, 1280, 50));
-        gameElements.addVisuals(new Visual(2360, 1280, 50));
+        gameElements.addVisuals(new Visual(100, 1380, 50));
+        gameElements.addVisuals(new Visual(2360, 1380, 50));
         
         gametime = 0;
-        
         gameElements.addSpawner(redballspawner);
         player = new Player();
         gameover = false;

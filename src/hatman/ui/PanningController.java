@@ -20,10 +20,15 @@ public class PanningController {
     private int mouseY = -1;
     private double panningSpeed = 1.3;
     private double panningRatio = 0.05;
+    private boolean panningShift = true;
     
     public PanningController(Dimension resolution, GameEnvironment game){
         this.resolution = resolution;
         this.game = game;
+    }
+    
+    public void setPanningShift(boolean b){
+        panningShift = b;
     }
     
     public void setPanningSpeed(double speed){
@@ -35,6 +40,9 @@ public class PanningController {
     }
     
     public void cycle(){
+        if(!panningShift){
+            return;
+        }
         double r = panningRatio;
         double ri = 1 - r;
         if(mouseX < resolution.width * r){
@@ -49,6 +57,14 @@ public class PanningController {
         if(mouseY > resolution.height * ri){
             shiftCanvasScale(0, -resolution.height / 100 * panningSpeed);
         }
+    }
+    
+    public void setPanning(double x, double y){
+        Scale scale = game.getScale();
+        scale = scale.setXShift(x, resolution.width);
+        scale = scale.setYShift(y, resolution.height);
+        game.setScale(scale);
+        correctCanvasShift();
     }
     
     public void adjustMapScale(double x, double y, int a){
