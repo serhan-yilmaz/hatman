@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman.game.block;
+package hatman;
 
-import java.awt.Point;
 import sygfx.ScaledGraphics;
 
 /**
  *
- * @author Serhan Yilmaz <github.com/serhan-yilmaz>
+ * @author Serhan
  */
 public abstract class Block {
     
@@ -71,10 +70,6 @@ public abstract class Block {
      */
     protected void setY(double y) {
         this.y = y;
-    }
-    
-    public Point getPosition(){
-        return new Point(getX(), getY());
     }
     
     public abstract void draw(ScaledGraphics sg);

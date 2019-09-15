@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman.game;
+package hatman;
 
-import hatman.util.FpsCounter;
-import hatman.game.block.Hatman;
-import hatman.game.util.SpeedCalculator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,7 +22,7 @@ import sygfx.util.Anchor;
 
 /**
  *
- * @author Serhan Yilmaz <github.com/serhan-yilmaz>
+ * @author Serhan
  */
 public class GameEnvironment {
     private final Dimension size;
@@ -36,7 +33,6 @@ public class GameEnvironment {
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
     private Scale mapImageScale = Scale.UNITY.scale(2, 2);
-    private SpeedCalculator speedCalculator = new SpeedCalculator(hatman);
     
     public GameEnvironment(int width, int height){
         this.size = new Dimension(width, height);
@@ -116,7 +112,6 @@ public class GameEnvironment {
     public void cycle(){
         fpsCounter.cycle();
         hatman.cycle();
-        speedCalculator.cyle();
 //        System.out.println("FPS : " + fpsCounter.getFps());
     }
     
