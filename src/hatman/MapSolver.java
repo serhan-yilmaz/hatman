@@ -5,15 +5,14 @@
  */
 package hatman;
 
-import hatman.ui.GUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Serhan Yilmaz <github.com/serhan-yilmaz>
+ * @author Serhan
  */
-public class HatmanMain {
+public class MapSolver {
 
     /**
      * @param args the command line arguments
@@ -29,7 +28,7 @@ public class HatmanMain {
             try {
                 Thread.sleep(20);
             } catch (InterruptedException ex) {
-                Logger.getLogger(HatmanMain.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MapSolver.class.getName()).log(Level.SEVERE, null, ex);
             }
             gui.cycle();
             if (heaptimer >= 5) {
@@ -41,5 +40,4 @@ public class HatmanMain {
             }
         }
     }
-    
 }

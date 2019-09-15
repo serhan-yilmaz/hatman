@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman.ui;
+package hatman;
 
-import hatman.game.GameEnvironment;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import sygfx.Scale;
@@ -15,7 +14,7 @@ import sygfx.util.Anchor;
 
 /**
  *
- * @author Serhan Yilmaz <github.com/serhan-yilmaz>
+ * @author Serhan
  */
 public class MinimapCanvas extends Container{
     private GameEnvironment game;

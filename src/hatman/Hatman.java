@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hatman.game.block;
+package hatman;
 
 import sygfx.ScaledGraphics;
 import java.awt.Color;
 import hatman.mapsolver.Node;
-import hatman.mapsolver.Path;
 import sygfx.util.Anchor;
 
 /**
  *
- * @author Serhan Yilmaz <github.com/serhan-yilmaz>
+ * @author Serhan
  */
 public class Hatman extends ConcreteBlock{
 
@@ -23,7 +22,6 @@ public class Hatman extends ConcreteBlock{
 
     @Override
     public void draw(ScaledGraphics sg) {
-        Path path = this.path;
         sg.setColor(Color.red);
         if(path != null){
             Node previous = new Node(getX(),getY());
