@@ -7,6 +7,9 @@ package hatman.game;
 
 import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
+import hatman.game.block.RedBall;
+import hatman.game.spawner.RedBallSpawner;
+import hatman.game.spawner.Spawner;
 import hatman.game.util.SpeedCalculator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,12 +34,13 @@ public class GameEnvironment {
     private final Dimension size;
     private BufferedImage mapImage;
     private Map map;
-    private Hatman hatman = new Hatman(250, 250, 6, 20);
+    private Hatman hatman;
     private AtomicBoolean busyFlag = new AtomicBoolean(false);
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
     private Scale mapImageScale = Scale.UNITY.scale(2, 2);
-    private SpeedCalculator speedCalculator = new SpeedCalculator(hatman);
+    private SpeedCalculator speedCalculator;
+    private GameElements gameElements = new GameElements();
     
     public GameEnvironment(int width, int height){
         this.size = new Dimension(width, height);
@@ -63,6 +67,23 @@ public class GameEnvironment {
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
+        reset();
+    }
+    
+    public void reset(){
+        hatman = new Hatman(250, 250, 6, 20);
+        speedCalculator = new SpeedCalculator(hatman);
+        gameElements.reset();
+        
+        RedBall prototype = new RedBall(0, 0, 3.52, 10, hatman);
+        Spawner redballspawner = new Spawner();
+        redballspawner.addSpawner(new RedBallSpawner (100, 60, prototype));
+        redballspawner.addSpawner(new RedBallSpawner (2360, 60, prototype));
+        redballspawner.addSpawner(new RedBallSpawner (100, 1280, prototype));
+        redballspawner.addSpawner(new RedBallSpawner (2360, 1280, prototype));
+        redballspawner.setSpawnPeriod(300);
+        
+        gameElements.addSpawner(redballspawner);
     }
     
     public void drawGameGraphics(ScaledGraphics sg){
@@ -76,6 +97,8 @@ public class GameEnvironment {
         sg.setColor(Color.blue);
 //        sg.fillOval(endX, endY, 20, 20);
         hatman.draw(sg);
+       
+        gameElements.draw(sg);
     }
     
     public void moveHatman(int x, int y){
@@ -116,8 +139,8 @@ public class GameEnvironment {
     public void cycle(){
         fpsCounter.cycle();
         hatman.cycle();
-        speedCalculator.cyle();
-//        System.out.println("FPS : " + fpsCounter.getFps());
+        speedCalculator.cycle();
+        gameElements.cycle();
     }
     
     public int getFPS(){

@@ -29,7 +29,7 @@ public class SpeedCalculator {
         numCycles = 0;
     }
     
-    public void cyle(){
+    public void cycle(){
         long time = System.nanoTime();
         numCycles++;
         if(time - timeStart >= 1e9){
@@ -47,7 +47,17 @@ public class SpeedCalculator {
         double distance = Math.sqrt(dx * dx + dy * dy);
         return distance;
     }
-            
-            
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
