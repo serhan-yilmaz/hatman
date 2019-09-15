@@ -13,12 +13,12 @@ import sygfx.util.Anchor;
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
-public class RedBall extends Block{
+public class RedBall extends TransientBlock{
     private final Block target;
     
     public RedBall(double x, double y, double speed, 
             double radius, Block target) {
-        super(x, y, speed, radius);
+        super(x, y, speed, radius, 3000);
         this.target = target;
     }
 
@@ -33,12 +33,21 @@ public class RedBall extends Block{
     }
 
     @Override
-    public void cycle() {
+    public boolean cycle() {
         moveThrough(target.x, target.y, this.speed);
+        if(isTargetReached()){
+            return true;
+        }
+        return super.cycle();
     }
     
     public boolean isTargetReached(){
-        return getDistanceTo(target.x, target.y) < (radius + target.radius);
+        return getDistanceTo(target.x, target.y) < (radius);
+    }
+
+    @Override
+    public RedBall clone() {
+        return new RedBall(x, y, speed, radius, target);
     }
     
 }

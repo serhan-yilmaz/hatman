@@ -25,7 +25,7 @@ public abstract class ConcreteBlock extends Block{
     }
     
     @Override
-    public void cycle(){
+    public boolean cycle(){
         Path path = this.path;
         double remain = speed;
         if(path != null){
@@ -37,6 +37,7 @@ public abstract class ConcreteBlock extends Block{
                 }
             }
         }
+        return false;
     }
     
     public Path getPath(){

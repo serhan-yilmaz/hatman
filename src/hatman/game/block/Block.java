@@ -13,7 +13,6 @@ import sygfx.ScaledGraphics;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public abstract class Block {
-    
     protected double radius;
     protected double speed;
     protected double x;
@@ -60,7 +59,7 @@ public abstract class Block {
     /**
      * @param x the x to set
      */
-    protected void setX(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -74,7 +73,7 @@ public abstract class Block {
     /**
      * @param y the y to set
      */
-    protected void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
     
@@ -93,7 +92,7 @@ public abstract class Block {
     
     public abstract void draw(ScaledGraphics sg);
     
-    public abstract void cycle();
+    public abstract boolean cycle();
     
     protected double getDistanceTo(int x, int y){
         return getDistanceTo((double) x, (double) y);	
@@ -104,5 +103,8 @@ public abstract class Block {
         double dy = this.y - y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+ 
+    @Override
+    public abstract Block clone();
     
 }

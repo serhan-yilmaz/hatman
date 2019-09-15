@@ -54,5 +54,10 @@ public class Hatman extends ConcreteBlock{
         double cost = path.getTotalCost() - n.getCost() + getDistanceTo(n.getX(), n.getY());
         return (int) Math.round(cost);
     }
+
+    @Override
+    public Hatman clone() {
+        return new Hatman(x, y, speed, radius);
+    }
     
 }
