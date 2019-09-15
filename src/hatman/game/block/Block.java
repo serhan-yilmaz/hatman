@@ -13,17 +13,21 @@ import sygfx.ScaledGraphics;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public abstract class Block {
-    
+    protected double radius;
     protected double speed;
     protected double x;
     protected double y;
     
-    public Block(double x, double y, double speed){
+    public Block(double x, double y, double speed, double radius){
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.radius = radius;
         if(speed < 0){
             throw new IllegalArgumentException("Unsupported Parameter <Speed> : " + speed);
+        }
+        if(radius < 0){	
+            throw new IllegalArgumentException("Unsupported Parameter <Radius> : " + radius);	
         }
     }
     
@@ -55,7 +59,7 @@ public abstract class Block {
     /**
      * @param x the x to set
      */
-    protected void setX(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
@@ -69,7 +73,7 @@ public abstract class Block {
     /**
      * @param y the y to set
      */
-    protected void setY(double y) {
+    public void setY(double y) {
         this.y = y;
     }
     
@@ -77,14 +81,30 @@ public abstract class Block {
         return new Point(getX(), getY());
     }
     
+    public double getRadius(){	
+        return radius;	
+    }	
+
+    public double getSpeed(){	
+        return speed;	
+    }	
+
+    
     public abstract void draw(ScaledGraphics sg);
     
-    public abstract void cycle();
+    public abstract boolean cycle();
     
     protected double getDistanceTo(int x, int y){
+        return getDistanceTo((double) x, (double) y);	
+    }	
+
+    protected double getDistanceTo(double x, double y){
         double dx = this.x - x;
         double dy = this.y - y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+ 
+    @Override
+    public abstract Block clone();
     
 }
