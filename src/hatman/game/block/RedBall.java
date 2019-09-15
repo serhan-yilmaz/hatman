@@ -14,13 +14,11 @@ import sygfx.util.Anchor;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class RedBall extends Block{
-    private double radius;
-    private Block target;
+    private final Block target;
     
     public RedBall(double x, double y, double speed, 
             double radius, Block target) {
-        super(x, y, speed);
-        this.radius = radius;
+        super(x, y, speed, radius);
         this.target = target;
     }
 
@@ -37,6 +35,10 @@ public class RedBall extends Block{
     @Override
     public void cycle() {
         moveThrough(target.x, target.y, this.speed);
+    }
+    
+    public boolean isTargetReached(){
+        return getDistanceTo(target.x, target.y) < (radius + target.radius);
     }
     
 }

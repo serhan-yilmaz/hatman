@@ -16,6 +16,7 @@ public class SpeedCalculator {
     private long timeStart;
     private Point startPosition;
     private final Block block;
+    private int numCycles;
     
     public SpeedCalculator(Block block){
         this.block = block;
@@ -25,12 +26,16 @@ public class SpeedCalculator {
     public final void reset(){
         startPosition = block.getPosition();
         timeStart = System.nanoTime();
+        numCycles = 0;
     }
     
     public void cyle(){
         long time = System.nanoTime();
+        numCycles++;
         if(time - timeStart >= 1e9){
             double distance = computeDistance(block.getPosition());
+            System.out.println("Disposition: " + Math.round(distance) + 
+                    ", Number of Cycles: " + numCycles);
             System.out.println("Disposition: " + Math.round(distance));
             reset();
         }

@@ -14,16 +14,21 @@ import sygfx.ScaledGraphics;
  */
 public abstract class Block {
     
+    protected double radius;
     protected double speed;
     protected double x;
     protected double y;
     
-    public Block(double x, double y, double speed){
+    public Block(double x, double y, double speed, double radius){
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.radius = radius;
         if(speed < 0){
             throw new IllegalArgumentException("Unsupported Parameter <Speed> : " + speed);
+        }
+        if(radius < 0){	
+            throw new IllegalArgumentException("Unsupported Parameter <Radius> : " + radius);	
         }
     }
     
@@ -77,11 +82,24 @@ public abstract class Block {
         return new Point(getX(), getY());
     }
     
+    public double getRadius(){	
+        return radius;	
+    }	
+
+    public double getSpeed(){	
+        return speed;	
+    }	
+
+    
     public abstract void draw(ScaledGraphics sg);
     
     public abstract void cycle();
     
     protected double getDistanceTo(int x, int y){
+        return getDistanceTo((double) x, (double) y);	
+    }	
+
+    protected double getDistanceTo(double x, double y){
         double dx = this.x - x;
         double dy = this.y - y;
         return Math.sqrt(dx * dx + dy * dy);

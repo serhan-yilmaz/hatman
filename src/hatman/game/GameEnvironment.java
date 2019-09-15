@@ -31,7 +31,7 @@ public class GameEnvironment {
     private final Dimension size;
     private BufferedImage mapImage;
     private Map map;
-    private Hatman hatman = new Hatman(250, 250, 6);
+    private Hatman hatman = new Hatman(250, 250, 6, 20);
     private AtomicBoolean busyFlag = new AtomicBoolean(false);
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
