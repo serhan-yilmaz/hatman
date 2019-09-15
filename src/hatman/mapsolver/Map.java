@@ -144,7 +144,7 @@ public class Map {
     }
     
     private void render() throws IOException{
-        BufferedImage img = ImageIO.read(Map.class.getResourceAsStream("/images/obstacleMap.png"));
+        BufferedImage img = ImageIO.read(Map.class.getResourceAsStream("/resources/images/obstacleMap.png"));
         double radius = 20.0 / QUANTIZATION_FACTOR;
         int r = (int) Math.ceil(radius);
         for(int i1 = 0; i1 < img.getWidth(); i1++){

@@ -49,6 +49,8 @@ public class GUI {
     
     public void setVisible(){
         f.setVisible(true);
+        jcanvas.setFocusable(true);
+        jcanvas.requestFocus();
     }
     
     public void cycle(){

@@ -25,10 +25,7 @@ public class UICanvas extends Container{
     @Override
     public void paintComponent(ScaledGraphics g){
         super.paintComponent(g);
-        g.setColor(Color.red);
-        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
-        g.drawString("Cost : " + game.getHatman().getEstimatedPathCost(), 100, 40);
-        g.drawString("Fps : " + game.getFPS(), 1100, 40);
+        game.drawUIGraphics(g);
     }
     
     @Override

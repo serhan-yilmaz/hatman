@@ -21,15 +21,21 @@ import sygfx.ScaledGraphics;
 public class GameElements {
     private final UnorderedArrayList<RedBall> redballs;
     private final UnorderedArrayList<Spawner> spawners;
+    private final UnorderedArrayList<Block> visuals;
     
     public GameElements(){
         redballs = new UnorderedArrayList<>();
         spawners = new UnorderedArrayList<>();
+        visuals = new UnorderedArrayList<>();
     }
     
     public void reset(){
         redballs.clear();
         spawners.clear();
+    }
+    
+    public void addVisuals(Block b){
+        visuals.add(b);
     }
     
     public void addSpawner(Spawner s){
@@ -65,6 +71,9 @@ public class GameElements {
         }
         for (Spawner s : spawners) {
             s.draw(g);
+        }
+        for (Block b : visuals) {
+            b.draw(g);
         }
     }
     
