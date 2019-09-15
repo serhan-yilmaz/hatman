@@ -5,9 +5,11 @@
  */
 package hatman.game;
 
+import hatman.game.block.Block;
 import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
 import hatman.game.block.RedBall;
+import hatman.game.block.Visual;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
 import hatman.game.util.SpeedCalculator;
@@ -22,6 +24,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.imageio.ImageIO;
 import hatman.mapsolver.Map;
 import hatman.mapsolver.Path;
+import java.awt.Font;
+import java.util.Iterator;
 import sygfx.Scale;
 import sygfx.ScaledGraphics;
 import sygfx.util.Anchor;
@@ -41,6 +45,9 @@ public class GameEnvironment {
     private Scale mapImageScale = Scale.UNITY.scale(2, 2);
     private SpeedCalculator speedCalculator;
     private GameElements gameElements = new GameElements();
+    private Player player = new Player();
+    private boolean gameover = false;
+    private int gametime = 0;
     
     public GameEnvironment(int width, int height){
         this.size = new Dimension(width, height);
@@ -48,6 +55,7 @@ public class GameEnvironment {
     }
  
     private void initialize(){
+        hatman = new Hatman(250, 250, 6, 20);
         map = new Map(getMapWidth(), getMapHeight());
         GraphicsDevice gd = GraphicsEnvironment.
                 getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -61,7 +69,7 @@ public class GameEnvironment {
         g.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
         try {
             BufferedImage img = ImageIO.read(Map.class.
-                    getResourceAsStream("/images/obstacleMap.png"));
+                    getResourceAsStream("/resources/images/obstacleMap.png"));
             g.drawImage(img, 0, 0, mapImage.getWidth(),  
                     mapImage.getHeight(), null);
         } catch (IOException ex) {
@@ -71,7 +79,6 @@ public class GameEnvironment {
     }
     
     public void reset(){
-        hatman = new Hatman(250, 250, 6, 20);
         speedCalculator = new SpeedCalculator(hatman);
         gameElements.reset();
         
@@ -83,7 +90,16 @@ public class GameEnvironment {
         redballspawner.addSpawner(new RedBallSpawner (2360, 1280, prototype));
         redballspawner.setSpawnPeriod(300);
         
+        gameElements.addVisuals(new Visual(100, 60, 50));
+        gameElements.addVisuals(new Visual(2360, 60, 50));
+        gameElements.addVisuals(new Visual(100, 1280, 50));
+        gameElements.addVisuals(new Visual(2360, 1280, 50));
+        
+        gametime = 0;
+        
         gameElements.addSpawner(redballspawner);
+        player = new Player();
+        gameover = false;
     }
     
     public void drawGameGraphics(ScaledGraphics sg){
@@ -99,6 +115,34 @@ public class GameEnvironment {
         hatman.draw(sg);
        
         gameElements.draw(sg);
+    }
+    
+    public void drawUIGraphics(ScaledGraphics g){
+
+//        g.drawString("Cost : " + getHatman().getEstimatedPathCost(), 100, 40);
+//        g.drawString("Fps : " + getFPS(), 1100, 40);
+        player.draw(g);
+        
+        String timeString = (new StringBuilder()).append("Time : ")
+                .append(getTimeString(gametime)).toString();
+        g.setAnchor(Anchor.WEST);
+        g.setColor(Color.black);
+        g.setFont(new Font("Arial", Font.PLAIN, 16));
+        g.drawString(timeString, 1080, 35);
+        g.drawString("Fps : " + getFPS(), 1080, 65);
+        if(gameover)
+        {
+            g.setAnchor(Anchor.CENTER);
+            g.setColor(Color.black);
+            g.setFont(new Font("Arial", 0, 64));
+            g.drawString("Game Over ", 640, 310);
+            g.setFont(new Font("Arial", 0, 28));
+            String scoretext = (new StringBuilder()).append("Score : ").append(getScore()).toString();
+            g.drawString(scoretext, 640, 355);
+            g.setFont(new Font("Arial", 0, 24));
+            g.drawString("Press R to Restart ", 640, 385);
+        }
+        
     }
     
     public void moveHatman(int x, int y){
@@ -138,13 +182,58 @@ public class GameEnvironment {
     
     public void cycle(){
         fpsCounter.cycle();
+        
+        if(gameover){
+            return;
+        }
+        gametime++;
+        
         hatman.cycle();
         speedCalculator.cycle();
         gameElements.cycle();
+        
+        Iterator<RedBall> iterator = gameElements.getRedballs().iterator();
+        while(iterator.hasNext()){
+            RedBall r = iterator.next();
+            if(r.isTargetReached()){
+                player.damage(405);
+                iterator.remove();
+            }
+        }
+        
+        player.cycle();
+        
+        if(player.getHealth() <= 0){
+            gameover = true;
+        }
     }
     
     public int getFPS(){
         return fpsCounter.getFPS()/2;
+    }
+    
+    public Player getPlayer(){
+        return player;
+    }
+    
+    public static String getTimeString(int gametime) {
+        int[] ti = new int[5];
+        ti[0] = (gametime % 50);
+        ti[1] = ((gametime - ti[0]) / 50);
+        ti[0] *= 2;
+        ti[2] = (ti[1] % 60);
+        ti[3] = ((ti[1] - ti[2]) / 60);
+        ti[4] = (ti[3] / 60);
+        String s = String.valueOf(ti[3]).concat(":")
+                .concat(String.valueOf(ti[2]).concat(".")
+                .concat(String.valueOf(ti[0])));
+        if (gametime == 0) return "-";
+        return s;
+    }
+    
+    public int getScore(){
+        int difficulty = 0;
+        return (int)((double)(4 * gametime) * (0.5D + (double)difficulty * 0.25D));
     }
     
 }

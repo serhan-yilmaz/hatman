@@ -35,9 +35,9 @@ public class RedBall extends TransientBlock{
     @Override
     public boolean cycle() {
         moveThrough(target.x, target.y, this.speed);
-        if(isTargetReached()){
-            return true;
-        }
+//        if(isTargetReached()){
+//            return true;
+//        }
         return super.cycle();
     }
     

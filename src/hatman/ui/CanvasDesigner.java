@@ -6,6 +6,8 @@
 package hatman.ui;
 
 import hatman.game.GameEnvironment;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -24,7 +26,6 @@ public class CanvasDesigner {
     
     public static void design(JCanvas canvas, 
             GameEnvironment game, GameController controller){
-        
         PanningController panning = controller.getPanningController();
         canvas.addMouseWheelListener(new MouseWheelListener() {
             @Override
@@ -33,6 +34,26 @@ public class CanvasDesigner {
                 double x = s.icX(e.getX());
                 double y = s.icY(e.getY());
                 panning.adjustMapScale(x, y, e.getWheelRotation());
+            }
+        });
+        canvas.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char s = e.getKeyChar();
+                if(s == 'k'){
+                    game.getPlayer().damage(450);
+                }
+                if(s == 'r'){
+                    game.reset();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
         Window window = canvas.getWindow();
