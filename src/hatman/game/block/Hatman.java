@@ -17,19 +17,16 @@ import sygfx.util.Anchor;
  */
 public class Hatman extends ConcreteBlock{
 
-    public Hatman(double x, double y, double speed, double radius) {
-        super(x, y, speed, radius);
+    public Hatman(double x, double y, double speed) {
+        super(x, y, speed);
     }
 
     @Override
     public void draw(ScaledGraphics sg) {
         Path path = this.path;
-        int x = this.getX();
-        int y = this.getY();
-        int radius = (int) this.radius;
         sg.setColor(Color.red);
         if(path != null){
-            Node previous = new Node(x, y);
+            Node previous = new Node(getX(),getY());
             for(Node n : path.getPath()){
                 if(previous != null){
                     sg.fillOval(n.getX(), n.getY(), 6, 6);
@@ -40,7 +37,7 @@ public class Hatman extends ConcreteBlock{
         }
         sg.setColor(Color.orange);
         sg.setAnchor(Anchor.CENTER);
-        sg.fillOval(x, y, 2 * radius, 2 * radius);
+        sg.fillOval(getX(), getY(), 40, 40);
     }
     
     public int getEstimatedPathCost(){

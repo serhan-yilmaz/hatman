@@ -30,8 +30,6 @@ public class MinimapCanvas extends Container{
     public void paintComponent(ScaledGraphics sg){
         super.paintComponent(sg);
         ScaledGraphics sg1 = new ScaledGraphics(sg, minimapScale);
-        sg1.setAnchor(Anchor.NORTHWEST);
-        sg1.clipRect(position.x, position.y, size.width, size.height);
         ScaledGraphics sg2 = new ScaledGraphics(sg, minimapScale.scale(0.5, 0.5));
         game.drawGameGraphics(sg2);
         ScaledGraphics sg3 = new ScaledGraphics(sg2, game.getScale().inverse());
