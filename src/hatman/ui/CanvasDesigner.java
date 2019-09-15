@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -62,9 +63,13 @@ public class CanvasDesigner {
         GameCanvas gameCanvas = 
                 new GameCanvas(window.getWidth(), window.getHeight());
         MinimapCanvas minimapCanvas = 
-                new MinimapCanvas(window.getWidth(), window.getHeight());
+                new MinimapCanvas(window.getWidth(), window.getHeight(), 5);
         UICanvas uicanvas = 
                 new UICanvas(window.getWidth(), window.getHeight());
+        
+        gameCanvas.setClickable(true);
+        minimapCanvas.setClickable(false);
+        uicanvas.setClickable(false);
         
         gameCanvas.addMouseListener(new MouseAdapter() {
             @Override
@@ -75,6 +80,7 @@ public class CanvasDesigner {
                 game.moveHatman(x, y);  
             }
         });
+        
         gameCanvas.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -82,9 +88,35 @@ public class CanvasDesigner {
 
             @Override
             public void mouseMoved(MouseEvent e) {
+//                System.out.println("X : "+ (int) e.getX() + ", Y : " + e.getY());
                 panning.setMousePosition(e.getX(), e.getY());
             }
         });
+        
+//        minimapCanvas.addMouseMotionListener(new MouseMotionAdapter() {
+//            @Override
+//            public void mouseMoved(MouseEvent e) {
+//                Scale scale = minimapCanvas.getPositionScaling();
+//                System.out.println("X : "+ (int) scale.cX(e.getX()) + ", Y : " + e.getY());
+//                panning.setMousePosition(
+//                        (int) scale.cX(e.getX()), 
+//                        (int) scale.cY(e.getY()));
+//            }
+//        });
+//        
+//        minimapCanvas.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e){
+////                Scale scale = game.getScale().inverse();
+//                Scale scale = minimapCanvas.getMinimapScaling().inverse();
+////                Scale scale = Scale.UNITY.scale(5, 5);
+//                int x = scale.cX(e.getX());
+//                int y = scale.cY(e.getY());
+//                panning.setPanning(x, y);
+//                System.out.println("X : "+ x + ", Y : "+ y);
+////                game.moveHatman(x, y);  
+//            }
+//        });
 
         gameCanvas.setGameEnvironment(game);
         minimapCanvas.setGameEnvironment(game);
