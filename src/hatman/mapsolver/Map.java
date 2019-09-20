@@ -195,6 +195,9 @@ public class Map {
         int sty = quantize(startY);
         int endx = quantize(endX);
         int endy = quantize(endY);
+        if(obstacle[stx][sty] || obstacle[endx][endy])
+            return null;
+        
         int iteration = 0;
         long startTime = System.nanoTime();
         prepare();
@@ -245,6 +248,9 @@ public class Map {
         int sty = quantize(startY);
         int endx = quantize(endX);
         int endy = quantize(endY);
+        if(obstacle[stx][sty] || obstacle[endx][endy])
+            return null;
+        
         long startTime = System.nanoTime();
         prepare();
         addOpenList(stx,sty,getHeuristicScore(stx,sty,endx,endy));

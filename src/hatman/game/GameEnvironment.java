@@ -163,7 +163,7 @@ public class GameEnvironment {
         gametime++;
         
         hatman.cycle();
-        speedCalculator.cycle();
+//        speedCalculator.cycle();
         gameElements.cycle();
         
         Iterator<RedBall> iterator = gameElements.getRedballs().iterator();

@@ -29,6 +29,14 @@ public class HatmanMain {
         ScheduledExecutorService scheduler = 
                 Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(gui::cycle, 20, 20, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(HatmanMain::printHeapSize, 5, 5, TimeUnit.SECONDS);
+    }
+    
+    public static void printHeapSize(){
+       long heapsize = Runtime.getRuntime().totalMemory();
+       long heapsize_kib = (heapsize / 1024);
+       long heapsize_mib = (heapsize_kib / 1024);
+       System.out.println("Heap size is: " + heapsize_mib + " MiB");   
     }
     
 }
