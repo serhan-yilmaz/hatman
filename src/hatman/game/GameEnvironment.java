@@ -36,13 +36,12 @@ import sygfx.util.Anchor;
  */
 public class GameEnvironment {
     private final Dimension size;
-    private BufferedImage mapImage;
     private Map map;
+    private GameMapVisuals mapVisuals;
     private Hatman hatman;
     private AtomicBoolean busyFlag = new AtomicBoolean(false);
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
-    private Scale mapImageScale = Scale.UNITY.scale(2, 2);
     private SpeedCalculator speedCalculator;
     private GameElements gameElements = new GameElements();
     private Player player = new Player();
@@ -57,24 +56,7 @@ public class GameEnvironment {
     private void initialize(){
         hatman = new Hatman(250, 250, 6, 20);
         map = new Map(getMapWidth(), getMapHeight());
-        GraphicsDevice gd = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int mapImageWidth = (int) mapImageScale.icX(getMapWidth());
-        int mapImageHeight = (int) mapImageScale.icX(getMapHeight());
-        System.out.println("MapImage : " + mapImageWidth + " - " + mapImageHeight);
-        mapImage = gd.getDefaultConfiguration().
-                createCompatibleImage(mapImageWidth, mapImageHeight, 1);
-        Graphics g = mapImage.createGraphics();
-        g.setColor(Color.white);
-        g.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
-        try {
-            BufferedImage img = ImageIO.read(Map.class.
-                    getResourceAsStream("/resources/images/obstacleMap.png"));
-            g.drawImage(img, 0, 0, mapImage.getWidth(),  
-                    mapImage.getHeight(), null);
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
+        mapVisuals = new GameMapVisuals(this.size, map);
         reset();
     }
     
@@ -104,10 +86,7 @@ public class GameEnvironment {
     public void drawGameGraphics(ScaledGraphics sg){
         fpsCounter.count();
 //        sg = new ScaledGraphics(sg, gameScale);
-        sg.setAnchor(Anchor.NORTHWEST);
-        ScaledGraphics sg2 = new ScaledGraphics(sg, mapImageScale);
-        sg2.setAnchor(Anchor.NORTHWEST);
-        sg2.drawImage(mapImage, 0, 0, null);
+        mapVisuals.draw(sg);
         sg.setAnchor(Anchor.CENTER);
         sg.setColor(Color.blue);
 //        sg.fillOval(endX, endY, 20, 20);
@@ -161,10 +140,6 @@ public class GameEnvironment {
     
     public void setScale(Scale scale){
         this.gameScale = scale;
-    }
-    
-    public BufferedImage getMapImage(){
-        return mapImage;
     }
     
     public int getMapWidth(){
