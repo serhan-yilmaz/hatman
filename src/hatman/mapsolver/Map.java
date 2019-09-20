@@ -18,7 +18,7 @@ import hatman.mapsolver.FibonacciHeap.Entry;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Map {
-    public static final int QUANTIZATION_FACTOR = 10;
+    public static final int QUANTIZATION_FACTOR = 5;
     private final int xSize;
     private final int ySize;
     private final int WIDTH;
@@ -123,6 +123,10 @@ public class Map {
         }
     }
     
+    public boolean hasObstableAt(int x, int y){
+        return this.obstacle[x][y];
+    }
+    
     private int quantize(int n){
         return n / QUANTIZATION_FACTOR;
     }
@@ -185,6 +189,7 @@ public class Map {
         return x == endX && y == endY;
         //return getDistanceTo(x,y,endX,endY) <= quantize(10);
     }
+    
     public Path solveLee(int startX, int startY, int endX, int endY){
         int stx = quantize(startX);
         int sty = quantize(startY);

@@ -5,6 +5,7 @@
  */
 package hatman;
 
+import hatman.game.ResourceManager;
 import hatman.ui.GUI;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,6 +21,8 @@ public class HatmanMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ResourceManager.initialize();
+        
         GUI gui = new GUI();
         gui.setVisible();
         
