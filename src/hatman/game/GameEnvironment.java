@@ -5,11 +5,13 @@
  */
 package hatman.game;
 
+import hatman.game.block.BlackBullet;
 import hatman.game.block.Block;
 import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
 import hatman.game.block.RedBall;
 import hatman.game.block.Visual;
+import hatman.game.spawner.BlackBulletSpawner;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
 import hatman.game.util.SpeedCalculator;
@@ -72,6 +74,14 @@ public class GameEnvironment {
         redballspawner.addSpawner(new RedBallSpawner (2360, 1380, prototype));
         redballspawner.setSpawnPeriod(300);
         
+        BlackBullet bb = new BlackBullet(0, 0, 15.3, 20, 0);
+        Spawner bbspawner = new Spawner();
+        bbspawner.addSpawner(new BlackBulletSpawner(100, 60, bb, hatman));
+        bbspawner.addSpawner(new BlackBulletSpawner(2360, 60, bb, hatman));
+        bbspawner.addSpawner(new BlackBulletSpawner(100, 1380, bb, hatman));
+        bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
+        bbspawner.setSpawnPeriod(352);
+        
         gameElements.addVisuals(new Visual(100, 60, 50));
         gameElements.addVisuals(new Visual(2360, 60, 50));
         gameElements.addVisuals(new Visual(100, 1380, 50));
@@ -79,6 +89,7 @@ public class GameEnvironment {
         
         gametime = 0;
         gameElements.addSpawner(redballspawner);
+        gameElements.addSpawner(bbspawner);
         player = new Player();
         gameover = false;
     }
@@ -163,7 +174,7 @@ public class GameEnvironment {
         gametime++;
         
         hatman.cycle();
-        speedCalculator.cycle();
+//        speedCalculator.cycle();
         gameElements.cycle();
         
         Iterator<RedBall> iterator = gameElements.getRedballs().iterator();
@@ -174,6 +185,16 @@ public class GameEnvironment {
                 iterator.remove();
             }
         }
+        
+        Iterator<BlackBullet> itBB = gameElements.getBlackBullets().iterator();
+        while(itBB.hasNext()){
+            BlackBullet b = itBB.next();
+            if(b.isTargetReached(hatman)){
+                player.damage(385);
+                itBB.remove();
+            }
+        }
+        
         
         player.cycle();
         

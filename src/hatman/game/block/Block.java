@@ -103,6 +103,10 @@ public abstract class Block {
         double dy = this.y - y;
         return Math.sqrt(dx * dx + dy * dy);
     }
+    
+    public boolean isTargetReached(Block target){
+        return getDistanceTo(target.x, target.y) < (radius);
+    }
  
     @Override
     public abstract Block clone();
