@@ -38,11 +38,11 @@ public class RedBall extends TransientBlock{
 //        if(isTargetReached()){
 //            return true;
 //        }
-        return super.cycle();
+        return timer.cycle();
     }
     
     public boolean isTargetReached(){
-        return getDistanceTo(target.x, target.y) < (radius);
+        return isTargetReached(target);
     }
 
     @Override

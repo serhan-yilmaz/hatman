@@ -5,6 +5,7 @@
  */
 package hatman.game;
 
+import hatman.game.block.BlackBullet;
 import hatman.game.block.Block;
 import hatman.game.block.RedBall;
 import hatman.game.spawner.Spawner;
@@ -20,6 +21,7 @@ import sygfx.ScaledGraphics;
  */
 public class GameElements {
     private final UnorderedArrayList<RedBall> redballs;
+    private final UnorderedArrayList<BlackBullet> blackbullets;
     private final UnorderedArrayList<Spawner> spawners;
     private final UnorderedArrayList<Block> visuals;
     
@@ -27,11 +29,13 @@ public class GameElements {
         redballs = new UnorderedArrayList<>();
         spawners = new UnorderedArrayList<>();
         visuals = new UnorderedArrayList<>();
+        blackbullets = new UnorderedArrayList<>();
     }
     
     public void reset(){
         redballs.clear();
         spawners.clear();
+        blackbullets.clear();
     }
     
     public void addVisuals(Block b){
@@ -47,16 +51,32 @@ public class GameElements {
         redballs.add(redball);
     }
     
+    public void addBlackBullet(BlackBullet blackbullet){
+        blackbullets.add(blackbullet);
+    }
+    
     public UnorderedArrayList<RedBall> getRedballs(){
         return redballs;
     }
     
+    public UnorderedArrayList<BlackBullet> getBlackBullets(){
+        return blackbullets;
+    }
+    
     public void cycle(){
-        Iterator<RedBall> iterator = redballs.iterator();
-        while(iterator.hasNext()){
-            Block bo = iterator.next();
+        Iterator<RedBall> iteratorRB = redballs.iterator();
+        while(iteratorRB.hasNext()){
+            Block bo = iteratorRB.next();
             if(bo.cycle()){
-                iterator.remove();
+                iteratorRB.remove();
+            }
+        }
+        
+        Iterator<BlackBullet> iteratorBB = blackbullets.iterator();
+        while(iteratorBB.hasNext()){
+            Block bo = iteratorBB.next();
+            if(bo.cycle()){
+                iteratorBB.remove();
             }
         }
         
@@ -73,6 +93,10 @@ public class GameElements {
             s.draw(g);
         }
         for (Block b : visuals) {
+            b.draw(g);
+        }
+        
+        for (Block b : blackbullets) {
             b.draw(g);
         }
     }

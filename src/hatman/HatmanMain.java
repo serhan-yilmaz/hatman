@@ -7,8 +7,10 @@ package hatman;
 
 import hatman.game.ResourceManager;
 import hatman.ui.GUI;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,7 +22,7 @@ public class HatmanMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ResourceManager.initialize();
         
         GUI gui = new GUI();
@@ -28,8 +30,11 @@ public class HatmanMain {
         
         ScheduledExecutorService scheduler = 
                 Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(gui::cycle, 20, 20, TimeUnit.MILLISECONDS);
+        ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(gui::cycle, 
+                20, 20, TimeUnit.MILLISECONDS);
         scheduler.scheduleAtFixedRate(HatmanMain::printHeapSize, 5, 5, TimeUnit.SECONDS);
+        
+        future.get();
     }
     
     public static void printHeapSize(){

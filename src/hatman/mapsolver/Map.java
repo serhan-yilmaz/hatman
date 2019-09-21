@@ -380,7 +380,7 @@ public class Map {
         num++;
         long dif = System.nanoTime() - startTime;
         total += dif;
-        System.out.println("Time passed : " + (dif / 1000) + " us");
+//        System.out.println("Time passed : " + (dif / 1000) + " us");
         //System.out.println("Average : " + getAverageRunTime() + " us" + ", in " + num + " trials");
     }
     

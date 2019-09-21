@@ -32,7 +32,9 @@ public class GameMapVisuals {
     private int flowermap[][];
     private BufferedImage mapImage;
     private Scale mapImageScale = Scale.UNITY.scale(1, 1);
-    private Graphics2D mg2;
+//    private Scale mapImageScale = Scale.UNITY.scale(2, 2);
+    private ScaledGraphics mg2;
+//    private Graphics2D mg2;
     
     public GameMapVisuals(Dimension size, Map map){
         this.size = size;
@@ -62,7 +64,9 @@ public class GameMapVisuals {
             System.err.println(ex.getMessage());
         }
         
-        mg2 = mapImage.createGraphics();
+        mg2 = new ScaledGraphics(mapImage.createGraphics(), mapImageScale.inverse());
+//        mg2 = mapImage.createGraphics();
+        
         flowermap = new int[mapImage.getWidth()][mapImage.getHeight()];
         
         bufferMap();
@@ -76,6 +80,7 @@ public class GameMapVisuals {
 
     public void bufferMap()
     {
+        mg2.setAnchor(Anchor.NORTHWEST);
         Random ran = new Random();
         
         for(int i = 0; i < mapImage.getWidth(); i++)
@@ -92,6 +97,8 @@ public class GameMapVisuals {
         int rgbcol2 = (new Color(20, 120, 45)).getRGB();
         int rgbcol3 = (new Color(220, 10, 15)).getRGB();
         int rgbcol4 = (new Color(238, 238, 238)).getRGB();
+        
+        
         int qf = Map.QUANTIZATION_FACTOR;
         int width = mapImage.getWidth();
         int height = mapImage.getHeight();
@@ -111,6 +118,7 @@ public class GameMapVisuals {
                 else
                 if(myran < 0.5D)
                     s = 11;
+                
                 myran = Math.random();
                 if(myran < 0.13D)
                     s2 = 9;
@@ -126,7 +134,7 @@ public class GameMapVisuals {
                     mg2.fillRect(i * qf + (qf - s) / 2, j * qf + (qf - s2) / 2, s, s2);
             }
         }
-
+        
         for(int i = 10; i < 2557; i++)
         {
             for(int j = 10; j < 1430; j++)
@@ -137,23 +145,22 @@ public class GameMapVisuals {
                 for(int m = 0; m < 3 && !f; m++)
                 {
                     for(int n = 0; n < 3 && !f; n++)
-                        if(mapImage.getRGB((i + m) - 1, (j + n) - 1) == rgbcol 
-                                || mapImage.getRGB((i + m) - 1, (j + n) - 1) == rgbcol2)
+                        if(getRGB((i + m) - 1, (j + n) - 1) == rgbcol 
+                                || getRGB((i + m) - 1, (j + n) - 1) == rgbcol2)
                             f = true;
-
                 }
 
-                if(f)
-                    mapImage.setRGB(i, j, rgbcol2);
+                if(f){
+                    setRGB(i, j, rgbcol2);
+                }
             }
-
         }
 
         for(int i = 50; i < 2500; i++)
         {
             for(int j = 50; j < 1400; j++)
             {
-                if(mapImage.getRGB(i, j) != rgbcol2 || Math.random() >= 0.0030000000000000001D)
+                if(getRGB(i, j) != rgbcol2 || Math.random() >= 0.0030000000000000001D)
                     continue;
                 int redsit = 0;
                 int po = 5;
@@ -161,12 +168,12 @@ public class GameMapVisuals {
                 {
                     for(int n = 0; n < po; n++)
                     {
-                        if(mapImage.getRGB((i + m) - (po - 1) / 2, (j + n) - (po - 1) / 2) == rgbcol2)
+                        if(getRGB((i + m) - (po - 1) / 2, (j + n) - (po - 1) / 2) == rgbcol2)
                         {
                             redsit++;
                             continue;
                         }
-                        if(mapImage.getRGB((i + m) - (po - 1) / 2, (j + n) - (po - 1) / 2) == rgbcol)
+                        if(getRGB((i + m) - (po - 1) / 2, (j + n) - (po - 1) / 2) == rgbcol)
                             redsit += 2;
                     }
                 }
@@ -214,5 +221,18 @@ public class GameMapVisuals {
             }
         }
     }
+    
+    private int getRGB(int i, int j){
+        int x = (int) (i / mapImageScale.getXScaling());
+        int y = (int) (j / mapImageScale.getYScaling());
+        return mapImage.getRGB(x, y);
+    }
+    
+    private void setRGB(int i, int j, int color){
+        int x = (int) (i / mapImageScale.getXScaling());
+        int y = (int) (j / mapImageScale.getYScaling());
+        mapImage.setRGB(x, y, color);
+    }
+    
     
 }
