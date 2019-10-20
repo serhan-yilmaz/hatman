@@ -48,13 +48,12 @@ public class GameMapVisuals {
         int mapImageWidth = (int) mapImageScale.icX(size.width);
         int mapImageHeight = (int) mapImageScale.icX(size.height);
         System.out.println("MapImage : " + mapImageWidth + " - " + mapImageHeight);
-        mapImage = gd.getDefaultConfiguration().
-                createCompatibleImage(mapImageWidth, mapImageHeight, 1);
+        mapImage = gd.getDefaultConfiguration().createCompatibleImage(
+                mapImageWidth, mapImageHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics g = mapImage.createGraphics();
         g.setColor(Color.white);
         g.fillRect(0, 0, mapImage.getWidth(), mapImage.getHeight());
-        
-        
+                
         try {
             BufferedImage img = ImageIO.read(GameMapVisuals.class.
                     getResourceAsStream("/resources/images/obstacleMap.png"));
@@ -76,6 +75,7 @@ public class GameMapVisuals {
         ScaledGraphics sg2 = new ScaledGraphics(sg, mapImageScale);
         sg2.setAnchor(Anchor.NORTHWEST);
         sg2.drawImage(mapImage, 0, 0, null);
+//        sg2.drawImage(mapImage, 0, 0, mapImage.getWidth()/2, mapImage.getHeight()/2, null);
     }
 
     public void bufferMap()
@@ -233,6 +233,5 @@ public class GameMapVisuals {
         int y = (int) (j / mapImageScale.getYScaling());
         mapImage.setRGB(x, y, color);
     }
-    
     
 }
