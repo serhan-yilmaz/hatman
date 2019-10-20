@@ -34,8 +34,9 @@ public class GameElements {
     
     public void reset(){
         redballs.clear();
-        spawners.clear();
         blackbullets.clear();
+        visuals.clear();
+        spawners.clear();
     }
     
     public void addVisuals(Block b){
@@ -63,41 +64,40 @@ public class GameElements {
         return blackbullets;
     }
     
+    private void cycleBlocks(UnorderedArrayList<? extends Block> list){
+        Iterator<? extends Block> iterator = list.iterator();
+        while(iterator.hasNext()){
+            Block bo = iterator.next();
+            if(bo.cycle()){
+                iterator.remove();
+            }
+        }
+    }
+    
     public void cycle(){
-        Iterator<RedBall> iteratorRB = redballs.iterator();
-        while(iteratorRB.hasNext()){
-            Block bo = iteratorRB.next();
-            if(bo.cycle()){
-                iteratorRB.remove();
-            }
-        }
-        
-        Iterator<BlackBullet> iteratorBB = blackbullets.iterator();
-        while(iteratorBB.hasNext()){
-            Block bo = iteratorBB.next();
-            if(bo.cycle()){
-                iteratorBB.remove();
-            }
-        }
+        cycleBlocks(redballs);
+        cycleBlocks(blackbullets);
+        cycleBlocks(visuals);
         
         for(Spawner s: spawners){
             s.cycle();
         }
     }
     
-    public void draw(ScaledGraphics g){
-        for(RedBall r: redballs){
-            r.draw(g);
+    private void drawBlocks(ScaledGraphics g, 
+            UnorderedArrayList<? extends Block> list){
+        for(Block b: list){
+            b.draw(g);
         }
+    }
+    
+    public void draw(ScaledGraphics g){
+        drawBlocks(g, redballs);
+        drawBlocks(g, blackbullets);
+        drawBlocks(g, visuals);
+        
         for (Spawner s : spawners) {
             s.draw(g);
-        }
-        for (Block b : visuals) {
-            b.draw(g);
-        }
-        
-        for (Block b : blackbullets) {
-            b.draw(g);
         }
     }
     

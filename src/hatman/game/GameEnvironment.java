@@ -92,6 +92,7 @@ public class GameEnvironment {
         gameElements.addSpawner(bbspawner);
         player = new Player();
         gameover = false;
+        System.gc();
     }
     
     public void drawGameGraphics(ScaledGraphics sg){
