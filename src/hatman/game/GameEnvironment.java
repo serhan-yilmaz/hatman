@@ -97,20 +97,14 @@ public class GameEnvironment {
     
     public void drawGameGraphics(ScaledGraphics sg){
         fpsCounter.count();
-//        sg = new ScaledGraphics(sg, gameScale);
+        
         mapVisuals.draw(sg);
-        sg.setAnchor(Anchor.CENTER);
-        sg.setColor(Color.blue);
-//        sg.fillOval(endX, endY, 20, 20);
+        gameElements.drawVisuals(sg);
         hatman.draw(sg);
-       
         gameElements.draw(sg);
     }
     
     public void drawUIGraphics(ScaledGraphics g){
-
-//        g.drawString("Cost : " + getHatman().getEstimatedPathCost(), 100, 40);
-//        g.drawString("Fps : " + getFPS(), 1100, 40);
         player.draw(g);
         
         String timeString = (new StringBuilder()).append("Time : ")
@@ -132,7 +126,6 @@ public class GameEnvironment {
             g.setFont(new Font("Arial", 0, 24));
             g.drawString("Press R to Restart ", 640, 385);
         }
-        
     }
     
     public void moveHatman(int x, int y){
@@ -195,7 +188,6 @@ public class GameEnvironment {
                 itBB.remove();
             }
         }
-        
         
         player.cycle();
         
