@@ -11,6 +11,7 @@ import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
 import hatman.game.block.RedBall;
 import hatman.game.block.Visual;
+import hatman.game.block.WaterBlock;
 import hatman.game.spawner.BlackBulletSpawner;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
@@ -49,6 +50,7 @@ public class GameEnvironment {
     private Player player = new Player();
     private boolean gameover = false;
     private int gametime = 0;
+    private WaterBlock water;
     
     public GameEnvironment(int width, int height){
         this.size = new Dimension(width, height);
@@ -57,6 +59,7 @@ public class GameEnvironment {
  
     private void initialize(){
         hatman = new Hatman(250, 250, 6, 20);
+        water = new WaterBlock(1280, 720, 1, 250);
         map = new Map(getMapWidth(), getMapHeight());
         mapVisuals = new GameMapVisuals(this.size, map);
         reset();
@@ -95,22 +98,21 @@ public class GameEnvironment {
         System.gc();
     }
     
-    public void drawGameGraphics(ScaledGraphics sg){
+    public void countfps(){
         fpsCounter.count();
-//        sg = new ScaledGraphics(sg, gameScale);
+    }
+    
+    public void drawGameGraphics(ScaledGraphics sg){
+//        fpsCounter.count();
+        
         mapVisuals.draw(sg);
-        sg.setAnchor(Anchor.CENTER);
-        sg.setColor(Color.blue);
-//        sg.fillOval(endX, endY, 20, 20);
+        gameElements.drawVisuals(sg);
+        water.draw(sg);
         hatman.draw(sg);
-       
         gameElements.draw(sg);
     }
     
     public void drawUIGraphics(ScaledGraphics g){
-
-//        g.drawString("Cost : " + getHatman().getEstimatedPathCost(), 100, 40);
-//        g.drawString("Fps : " + getFPS(), 1100, 40);
         player.draw(g);
         
         String timeString = (new StringBuilder()).append("Time : ")
@@ -132,7 +134,6 @@ public class GameEnvironment {
             g.setFont(new Font("Arial", 0, 24));
             g.drawString("Press R to Restart ", 640, 385);
         }
-        
     }
     
     public void moveHatman(int x, int y){
@@ -175,6 +176,7 @@ public class GameEnvironment {
         gametime++;
         
         hatman.cycle();
+        water.cycle();
 //        speedCalculator.cycle();
         gameElements.cycle();
         
@@ -196,7 +198,6 @@ public class GameEnvironment {
             }
         }
         
-        
         player.cycle();
         
         if(player.getHealth() <= 0){
@@ -205,7 +206,7 @@ public class GameEnvironment {
     }
     
     public int getFPS(){
-        return fpsCounter.getFPS()/2;
+        return fpsCounter.getFPS();
     }
     
     public Player getPlayer(){

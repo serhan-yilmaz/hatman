@@ -91,10 +91,13 @@ public class GameElements {
         }
     }
     
+    public void drawVisuals(ScaledGraphics g){
+        drawBlocks(g, visuals);
+    }
+    
     public void draw(ScaledGraphics g){
         drawBlocks(g, redballs);
         drawBlocks(g, blackbullets);
-        drawBlocks(g, visuals);
         
         for (Spawner s : spawners) {
             s.draw(g);

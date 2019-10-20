@@ -38,6 +38,8 @@ public class MinimapCanvas extends Container{
     @Override
     public void paintComponent(ScaledGraphics sg){
         super.paintComponent(sg);
+        if(1 == 1)
+            return;
 //        sg.setClip((Rectangle) null);
         sg = new ScaledGraphics(sg, positionScale);
         ScaledGraphics sg1 = new ScaledGraphics(sg, minimapScale);
