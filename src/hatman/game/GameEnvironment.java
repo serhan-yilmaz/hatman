@@ -12,6 +12,7 @@ import hatman.game.block.Hatman;
 import hatman.game.block.RedBall;
 import hatman.game.block.Visual;
 import hatman.game.block.WaterBlock;
+import hatman.game.modifier.StatusEffects;
 import hatman.game.spawner.BlackBulletSpawner;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
@@ -41,13 +42,14 @@ public class GameEnvironment {
     private final Dimension size;
     private Map map;
     private GameMapVisuals mapVisuals;
+    private StatusEffects statusEffects;
     private Hatman hatman;
     private AtomicBoolean busyFlag = new AtomicBoolean(false);
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
     private SpeedCalculator speedCalculator;
     private GameElements gameElements = new GameElements();
-    private Player player = new Player();
+    private Player player;
     private boolean gameover = false;
     private int gametime = 0;
     private WaterBlock water;
@@ -58,7 +60,9 @@ public class GameEnvironment {
     }
  
     private void initialize(){
-        hatman = new Hatman(250, 250, 6, 20);
+        statusEffects = new StatusEffects();
+        hatman = new Hatman(250, 250, 5, 20, statusEffects);
+        player = new Player(statusEffects);
         water = new WaterBlock(1280, 720, 1, 250);
         map = new Map(getMapWidth(), getMapHeight());
         mapVisuals = new GameMapVisuals(this.size, map);
@@ -68,6 +72,8 @@ public class GameEnvironment {
     public void reset(){
         speedCalculator = new SpeedCalculator(hatman);
         gameElements.reset();
+        statusEffects.reset();
+        player.reset();
         
         RedBall prototype = new RedBall(0, 0, 3.52, 10, hatman);
         Spawner redballspawner = new Spawner();
@@ -93,7 +99,6 @@ public class GameEnvironment {
         gametime = 0;
         gameElements.addSpawner(redballspawner);
         gameElements.addSpawner(bbspawner);
-        player = new Player();
         gameover = false;
         System.gc();
     }
@@ -114,6 +119,7 @@ public class GameEnvironment {
     
     public void drawUIGraphics(ScaledGraphics g){
         player.draw(g);
+        statusEffects.draw(g);
         
         String timeString = (new StringBuilder()).append("Time : ")
                 .append(getTimeString(gametime)).toString();
@@ -179,6 +185,7 @@ public class GameEnvironment {
         water.cycle();
 //        speedCalculator.cycle();
         gameElements.cycle();
+        statusEffects.cycle();
         
         Iterator<RedBall> iterator = gameElements.getRedballs().iterator();
         while(iterator.hasNext()){
@@ -196,6 +203,13 @@ public class GameEnvironment {
                 player.damage(385);
                 itBB.remove();
             }
+        }
+        
+        if(water.isBlockInside(hatman)){
+            statusEffects.refreshWaterSlow(10);
+        }
+        if(water.isBlockInWave(hatman)){
+            statusEffects.refreshWaveSlow(10);
         }
         
         player.cycle();
