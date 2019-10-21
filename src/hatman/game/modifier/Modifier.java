@@ -5,6 +5,7 @@
  */
 package hatman.game.modifier;
 
+import java.awt.image.BufferedImage;
 import sygfx.ScaledGraphics;
 
 /**
@@ -13,12 +14,18 @@ import sygfx.ScaledGraphics;
  */
 public abstract class Modifier {
     private double remaining_duration = 0;
+    private BufferedImage img;
     
-    public Modifier(){
-        
+    public Modifier(BufferedImage img){
+        this.img = img;
     }
     
-    public abstract void draw(ScaledGraphics g);
+    public boolean draw(ScaledGraphics g, int x, int y){
+        if(isEnabled()){
+            g.drawImage(img, x, y, 25, 25, null);
+        }
+        return isEnabled();
+    }
     
     public final void reset(){
         remaining_duration = 0;

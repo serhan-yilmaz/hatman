@@ -5,22 +5,30 @@
  */
 package hatman.game.modifier;
 
+import hatman.game.ResourceManager;
 import java.util.ArrayList;
 import sygfx.ScaledGraphics;
+import sygfx.util.Anchor;
 
 /**
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class StatusEffects {
-    private ArrayList<Modifier> permanent_modifiers = new ArrayList<>();
+    private ArrayList<Modifier> modifiers = new ArrayList<>();
 
-    private Slow water_slow = new Slow(0.1);
-    private Slow wave_slow = new Slow(0.4);
+    private Slow water_slow = new Slow(0.1, ResourceManager.ice_icon);
+    private Slow wave_slow = new Slow(0.4, ResourceManager.wave_icon);
+    private Stun stun = new Stun(ResourceManager.stun_icon);
 
     public StatusEffects(){
-        permanent_modifiers.add(water_slow);
-        permanent_modifiers.add(wave_slow);
+        modifiers.add(water_slow);
+        modifiers.add(wave_slow);
+        modifiers.add(stun);
+    }
+    
+    public void refreshStun(double duration){
+        stun.refresh(duration);
     }
     
     public void refreshWaterSlow(double duration){
@@ -32,23 +40,32 @@ public class StatusEffects {
     }
     
     public void draw(ScaledGraphics g){
-        
+        g.setAnchor(Anchor.CENTER);
+        int x = 172;
+        int y = 67;
+        for(Modifier m: modifiers){
+            if(m.draw(g, x, y)){
+                x += 30;
+            }
+        }
     }
     
     public void reset(){
-        for(Modifier m: permanent_modifiers){
+        for(Modifier m: modifiers){
             m.reset();
         }
     }
     
     public void cycle(){
-        for(Modifier m: permanent_modifiers){
+        for(Modifier m: modifiers){
             m.cycle();
         }
     }
     
     public double getMovementModifier(){
-        return water_slow.getMovementModifier() * wave_slow.getMovementModifier();
+        return water_slow.getMovementModifier()
+               * wave_slow.getMovementModifier()
+               * stun.getMovementModifier();
     }
     
 }

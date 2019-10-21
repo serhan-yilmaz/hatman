@@ -6,23 +6,15 @@
 package hatman.game.modifier;
 
 import java.awt.image.BufferedImage;
-import sygfx.ScaledGraphics;
 
 /**
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
-public class Slow extends Modifier{
-    private double slow_amount;
+public class Stun extends Slow{
     
-    public Slow(double d, BufferedImage img){
-        super(img);
-        slow_amount = d;
-    }
-    
-    
-    public double getMovementModifier(){
-        return isEnabled()? 1 - slow_amount: 1;
+    public Stun(BufferedImage img) {
+        super(1, img);
     }
     
 }

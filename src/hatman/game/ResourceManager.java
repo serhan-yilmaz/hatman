@@ -16,10 +16,17 @@ import javax.imageio.ImageIO;
 public class ResourceManager {
     public final static BufferedImage flower[] = new BufferedImage[10];
     
+    public static BufferedImage wave_icon;
+    public static BufferedImage ice_icon;
+    public static BufferedImage stun_icon;
+    
     public static void initialize(){
         for (int i = 0; i < 3; i++) {
             flower[i] = readImage("/resources/images/flowers/flower" + i + ".png");
         }
+        wave_icon = readImage("/resources/images/modifiers/wave_icon.png");
+        ice_icon = readImage("/resources/images/modifiers/ice_icon.gif");
+        stun_icon = readImage("/resources/images/modifiers/stun.png");
     }
     
     public static BufferedImage readImage(String path){
