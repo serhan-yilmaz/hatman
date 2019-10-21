@@ -52,6 +52,7 @@ public class GameEnvironment {
     private SpeedCalculator speedCalculator;
     private GameElements gameElements = new GameElements();
     private Player player;
+    private boolean paused = false;
     private boolean gameover = false;
     private int gametime = 0;
     private WaterBlock water;
@@ -185,7 +186,7 @@ public class GameEnvironment {
     public void cycle(){
         fpsCounter.cycle();
         
-        if(gameover){
+        if(paused || gameover){
             return;
         }
         gametime++;
@@ -221,7 +222,6 @@ public class GameEnvironment {
             Mine m = itMN.next();
             if(m.isTargetExploded()){
                 player.damage(200);
-                //statusEffects.refreshStun(8);
                 itMN.remove();
             }
         }

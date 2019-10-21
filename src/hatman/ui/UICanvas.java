@@ -37,4 +37,8 @@ public class UICanvas extends Container{
         this.game = game;
     }
     
+    public GameEnvironment getGameEnvironment(){
+        return game;
+    }
+    
 }
