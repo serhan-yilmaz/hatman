@@ -12,11 +12,12 @@ import sygfx.ScaledGraphics;
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
-public class Burn extends Modifier{
+public class Burn implements Modifier{
     private double burn = 0;
+    private final BufferedImage img;
     
     public Burn(BufferedImage img) {
-        super(img);
+        this.img = img;
     }
     
     public void adjust(double amount){
@@ -37,6 +38,11 @@ public class Burn extends Modifier{
             n++;
         }
         return n;
+    }
+    
+    @Override
+    public void reset(){
+        burn = 0;
     }
     
     @Override

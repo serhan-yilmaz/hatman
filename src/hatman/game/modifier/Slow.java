@@ -12,7 +12,7 @@ import sygfx.ScaledGraphics;
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
-public class Slow extends Modifier{
+public class Slow extends AbstractModifier{
     private double slow_amount;
     
     public Slow(double d, BufferedImage img){
