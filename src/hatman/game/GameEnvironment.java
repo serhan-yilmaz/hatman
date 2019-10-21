@@ -9,11 +9,13 @@ import hatman.game.block.BlackBullet;
 import hatman.game.block.Block;
 import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
+import hatman.game.block.Mine;
 import hatman.game.block.RedBall;
 import hatman.game.block.Visual;
 import hatman.game.block.WaterBlock;
 import hatman.game.modifier.StatusEffects;
 import hatman.game.spawner.BlackBulletSpawner;
+import hatman.game.spawner.MineSpawner;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
 import hatman.game.util.SpeedCalculator;
@@ -91,6 +93,12 @@ public class GameEnvironment {
         bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
         bbspawner.setSpawnPeriod(352);
         
+        Mine mn = new Mine(100, 100, 100, hatman);
+        Spawner mnspawner = new Spawner();
+        mnspawner.addSpawner(new MineSpawner(100, 60, mn));
+        mnspawner.setSpawnPeriod(100);
+        
+        
         gameElements.addVisuals(new Visual(100, 60, 50));
         gameElements.addVisuals(new Visual(2360, 60, 50));
         gameElements.addVisuals(new Visual(100, 1380, 50));
@@ -99,6 +107,7 @@ public class GameEnvironment {
         gametime = 0;
         gameElements.addSpawner(redballspawner);
         gameElements.addSpawner(bbspawner);
+        gameElements.addSpawner(mnspawner);
         gameover = false;
         System.gc();
     }
@@ -204,6 +213,16 @@ public class GameEnvironment {
                 player.damage(385);
                 statusEffects.refreshStun(8);
                 itBB.remove();
+            }
+        }
+        
+        Iterator<Mine> itMN = gameElements.getMine().iterator();
+        while(itMN.hasNext()){
+            Mine m = itMN.next();
+            if(m.isTargetExploded()){
+                player.damage(200);
+                //statusEffects.refreshStun(8);
+                itMN.remove();
             }
         }
         
