@@ -19,6 +19,7 @@ public class ResourceManager {
     public static BufferedImage wave_icon;
     public static BufferedImage ice_icon;
     public static BufferedImage stun_icon;
+    public static BufferedImage flame_icon;
     
     public static void initialize(){
         for (int i = 0; i < 3; i++) {
@@ -27,6 +28,7 @@ public class ResourceManager {
         wave_icon = readImage("/resources/images/modifiers/wave_icon.png");
         ice_icon = readImage("/resources/images/modifiers/ice_icon.gif");
         stun_icon = readImage("/resources/images/modifiers/stun.png");
+        flame_icon = readImage("/resources/images/modifiers/flame_icon.gif");
     }
     
     public static BufferedImage readImage(String path){

@@ -191,7 +191,8 @@ public class GameEnvironment {
         while(iterator.hasNext()){
             RedBall r = iterator.next();
             if(r.isTargetReached()){
-                player.damage(405);
+                statusEffects.inflictFlame(0.6);
+                player.damage(355);
                 iterator.remove();
             }
         }
@@ -209,7 +210,9 @@ public class GameEnvironment {
         if(water.isBlockInside(hatman)){
             player.healPercentage(4.5e-4);
             statusEffects.refreshWaterSlow(10);
+            statusEffects.extinguishFlame(0.02);
         }
+        
         if(water.isBlockInWave(hatman)){
             statusEffects.refreshWaveSlow(10);
         }

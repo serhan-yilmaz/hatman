@@ -20,11 +20,21 @@ public class StatusEffects {
     private Slow water_slow = new Slow(0.1, ResourceManager.ice_icon);
     private Slow wave_slow = new Slow(0.4, ResourceManager.wave_icon);
     private Stun stun = new Stun(ResourceManager.stun_icon);
+    private Burn flame = new Burn(ResourceManager.flame_icon);
 
     public StatusEffects(){
         modifiers.add(water_slow);
         modifiers.add(wave_slow);
         modifiers.add(stun);
+        modifiers.add(flame);
+    }
+    
+    public void extinguishFlame(double amount){
+        flame.adjust(-1*amount);
+    }
+    
+    public void inflictFlame(double amount){
+        flame.adjust(amount);
     }
     
     public void refreshStun(double duration){
@@ -44,9 +54,8 @@ public class StatusEffects {
         int x = 172;
         int y = 67;
         for(Modifier m: modifiers){
-            if(m.draw(g, x, y)){
-                x += 30;
-            }
+            int nIcon = m.draw(g, x, y);
+            x += 30 * nIcon;
         }
     }
     
@@ -66,6 +75,10 @@ public class StatusEffects {
         return water_slow.getMovementModifier()
                * wave_slow.getMovementModifier()
                * stun.getMovementModifier();
+    }
+    
+    public double getDamage(){
+        return flame.getDamage();
     }
     
 }
