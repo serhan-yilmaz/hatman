@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.imageio.ImageIO;
 import hatman.mapsolver.Map;
 import hatman.mapsolver.Path;
+import hatman.util.UnorderedArrayList;
 import java.awt.Font;
 import java.util.Iterator;
 import sygfx.Scale;
@@ -94,10 +95,10 @@ public class GameEnvironment {
         bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
         bbspawner.setSpawnPeriod(352);
         
-        Mine mn = new Mine(100, 100, 100, hatman);
+        Mine mn = new Mine(100, 100, 100);
         Spawner mnspawner = new Spawner();
-        mnspawner.addSpawner(new MineSpawner(100, 60, mn));
-        mnspawner.setSpawnPeriod(100);
+        mnspawner.addSpawner(new MineSpawner(size.width, size.height, mn));
+        mnspawner.setSpawnPeriod(200);
         
         
         gameElements.addVisuals(new Visual(100, 60, 50));
@@ -201,7 +202,7 @@ public class GameEnvironment {
         while(iterator.hasNext()){
             RedBall r = iterator.next();
             if(r.isTargetReached()){
-                statusEffects.inflictFlame(0.6);
+                statusEffects.inflictFlame(0.3);
                 player.damage(355);
                 iterator.remove();
             }
@@ -217,12 +218,20 @@ public class GameEnvironment {
             }
         }
         
-        Iterator<Mine> itMN = gameElements.getMine().iterator();
-        while(itMN.hasNext()){
-            Mine m = itMN.next();
-            if(m.isTargetExploded()){
+        for(Mine m: gameElements.getMines()){
+            if(m.isTargetReached(hatman)){
+                m.triggerMine();
+            }
+            if(m.isTargetExploded(hatman)){
                 player.damage(200);
-                itMN.remove();
+                statusEffects.inflictFlame(0.9);
+            }
+            if(m.isExploded()){
+                for(Mine m2: gameElements.getMines()){
+                    if(m != m2 && m.isTargetExploded(m2)){
+                        m2.triggerMine();
+                    }
+                }
             }
         }
         

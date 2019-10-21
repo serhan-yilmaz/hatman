@@ -109,6 +109,10 @@ public abstract class Block {
     }
     
     public boolean isTargetReached(Block target){
+        return isTargetReached(target, radius);
+    }
+    
+    public boolean isTargetReached(Block target, double radius){
         return getDistanceTo(target.x, target.y) < (radius);
     }
  

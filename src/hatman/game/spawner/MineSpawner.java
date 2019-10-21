@@ -25,9 +25,11 @@ public class MineSpawner extends Spawner{
     
     @Override
     public void spawn() {
+        int x = (int) (Math.random() * position.x);
+        int y = (int) (Math.random() * position.y);
         Mine m = product.clone();
-        m.setX(position.x);
-        m.setY(position.y);
+        m.setX(x);
+        m.setY(y);
         gameElements.addMine(m);
     }
     

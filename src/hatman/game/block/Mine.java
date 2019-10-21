@@ -5,7 +5,9 @@
  */
 package hatman.game.block;
 
+import hatman.game.ResourceManager;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import sygfx.ScaledGraphics;
 import sygfx.util.Anchor;
 
@@ -14,82 +16,81 @@ import sygfx.util.Anchor;
  * @author ahmet
  */
 public class Mine extends TransientBlock{
-
-    private final int DAMAGE_RADIUS = 200;
-    private final int EXPLOSION_COUNTDOWN_TIME = 50;
-    private final int EXPLOSION_GAP = 20;
-    private final Block target;
+    
+    private static final int EXPLOSION_RADIUS = 200;
+    private static final int EXPLOSION_COUNTDOWN_TIME = 40;
+    private static final int EXPLOSION_GAP = 40;
+    
     private boolean triggered;
     private boolean exploded;
     private int explosionCountdown;
     private int explosionGap;
 
-    public Mine(double x, double y, double radius, Block target)
+    public Mine(double x, double y, double radius)
     {        
         super(x, y, 0, radius, 3000);
-        this.target = target;
         this.triggered = false;
         this.exploded = false;
         this.explosionCountdown = EXPLOSION_COUNTDOWN_TIME;
         this.explosionGap = EXPLOSION_GAP;
     }
     
-    public boolean isTargetExploded()
+    public boolean isTargetExploded(Block target)
     {
-        return explosionCountdown == 0 && isTargetReached(target);
+        return explosionCountdown == 0 && isTargetReached(target, EXPLOSION_RADIUS);
     }
-    public boolean isMineBlown()
+    
+    public boolean isTriggered()
     {
-        if(triggered)
-        {
-            return true;
-        }
-        
-        return false;
+        return triggered;
     }
     
     @Override
     public void draw(ScaledGraphics sg) {
-        //.drawImage(img, DAMAGE_RADIUS, DAMAGE_RADIUS, io);
         int x = (int) this.x;
         int y = (int) this.y;
-        int radius = 20;
+        int radius = 25;
         int trigger_radius = (int) this.radius;
-        sg.setAnchor(Anchor.CENTER);
-        sg.setColor(Color.gray);
-        sg.fillOval(x, y, 2 * radius, 2 * radius);
+        int explosion_radius = EXPLOSION_RADIUS;
         
+        sg.setAnchor(Anchor.CENTER);
+        if(triggered){
+            sg.drawImage(ResourceManager.mine_visual_triggered, 
+                    x, y, 2*radius, 2*radius, null);
+        } else {
+            sg.drawImage(ResourceManager.mine_visual, 
+                    x, y, 2*radius, 2*radius, null);
+        }
         sg.setColor(Color.black);
         sg.drawOval(x, y, 2 * trigger_radius, 2 * trigger_radius);
+        if(exploded){
+            sg.setColor(new Color(255, 0, 0, 120));
+            sg.fillOval(x, y, 2 * explosion_radius, 2 * explosion_radius);
+        }
     }
 
     @Override
     public boolean cycle() {
-        if(isTargetReached(target))
-        {
-            triggerMine();
-            
-        }
         if(isExploded())
         {
-           explosionGap = explosionGap -1;
+           explosionGap--;
         }
         if(triggered)
         {
-           explosionCountdown = explosionCountdown - 1; 
-           exploded = (explosionCountdown<=0);
+           explosionCountdown--;
+           exploded = (explosionCountdown <= 0);
         }
+        
         if(timer.cycle())
         {
             triggerMine();
         }
-        return triggered&&exploded&&(explosionGap == 0);
+        return triggered && exploded && (explosionGap <= 0);
     }
     
     public void triggerMine()
     {
         triggered = true;
-        
     }
     
     public boolean isExploded()
@@ -99,7 +100,7 @@ public class Mine extends TransientBlock{
 
     @Override
     public Mine clone() {
-      return new Mine(x, y, radius, target);
+      return new Mine(x, y, radius);
     }
     
 }
