@@ -73,12 +73,7 @@ public class GameElements {
         return blackbullets;
     }
     
-    public UnorderedArrayList<Mine> getMine() {
-        return mines;
-    }
-    
-    public UnorderedArrayList<Mine> getMines()
-    {
+    public UnorderedArrayList<Mine> getMines(){
         return mines;
     }
     
@@ -115,9 +110,9 @@ public class GameElements {
     }
     
     public void draw(ScaledGraphics g){
+        drawBlocks(g, mines);
         drawBlocks(g, redballs);
         drawBlocks(g, blackbullets);
-        drawBlocks(g, mines);
         
         for (Spawner s : spawners) {
             s.draw(g);
