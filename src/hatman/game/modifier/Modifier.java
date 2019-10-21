@@ -5,51 +5,14 @@
  */
 package hatman.game.modifier;
 
-import java.awt.image.BufferedImage;
 import sygfx.ScaledGraphics;
 
 /**
  *
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
-public abstract class Modifier {
-    private double remaining_duration = 0;
-    protected final BufferedImage img;
-    
-    public Modifier(BufferedImage img){
-        this.img = img;
-    }
-    
-    public int draw(ScaledGraphics g, int x, int y){
-        if(isEnabled()){
-            g.drawImage(img, x, y, 25, 25, null);
-            return 1;
-        }
-        return 0;
-    }
-    
-    public final void reset(){
-        remaining_duration = 0;
-    }
-    
-    public void cycle(){
-        remaining_duration--;
-        if(remaining_duration <= 0){
-            remaining_duration = 0;
-        }
-    }
-    
-    public final void refresh(double duration){
-        if(duration < 0){
-            throw new IllegalArgumentException("Invalid modifier duration!");
-        }
-        if(duration > remaining_duration){
-            remaining_duration = duration;
-        }
-    }
-    
-    public final boolean isEnabled(){
-        return remaining_duration > 0;
-    }
-    
+public interface Modifier {
+    public int draw(ScaledGraphics g, int x, int y);
+    public void reset();
+    public void cycle();
 }
