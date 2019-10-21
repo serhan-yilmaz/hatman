@@ -5,6 +5,7 @@
  */
 package hatman.game;
 
+import hatman.game.modifier.StatusEffects;
 import java.awt.Color;
 import java.awt.Font;
 import sygfx.ScaledGraphics;
@@ -15,11 +16,14 @@ import sygfx.util.Anchor;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Player {
+    private StatusEffects modifiers;
+    
     private double health;
     private double max_health;
     private double regen = 0.08;
     
-    public Player(){
+    public Player(StatusEffects modifiers){
+        this.modifiers = modifiers;
         reset();
     }
     
@@ -63,7 +67,6 @@ public class Player {
         g.drawString("Status Effects : ", 45, 70);
         g.setAnchor(Anchor.CENTER);
         g.drawString("" + (int) health, 285, 35);
-        
     }
     
     public double getHealth(){

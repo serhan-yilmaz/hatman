@@ -24,10 +24,7 @@ public abstract class ConcreteBlock extends Block{
         this.path = p;
     }
     
-    @Override
-    public boolean cycle(){
-        Path path = this.path;
-        double remain = speed;
+    protected void moveOnPath(Path path, double remain){
         if(path != null){
             while(remain > 0 && !path.isEmpty()){
                 Node n = path.peek();
@@ -37,7 +34,6 @@ public abstract class ConcreteBlock extends Block{
                 }
             }
         }
-        return false;
     }
     
     public Path getPath(){

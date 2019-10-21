@@ -31,6 +31,17 @@ public class WaterBlock extends Block{
     public WaterBlock(double x, double y, double speed, double radius) {
         super(x, y, speed, radius);
     }
+    
+    public boolean isBlockInside(Block b){
+        double radius_inner = radius - DEEP_WATER_LENGTH;
+        return getDistanceTo(b) < radius_inner;
+    }
+    
+    public boolean isBlockInWave(Block b){
+        double radius_inner = radius - DEEP_WATER_LENGTH;
+        double dist = getDistanceTo(b);
+        return dist >= radius_inner && dist <= radius;
+    }
 
     @Override
     public void draw(ScaledGraphics sg) {

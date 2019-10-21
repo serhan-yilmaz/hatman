@@ -5,6 +5,7 @@
  */
 package hatman.game.block;
 
+import hatman.game.modifier.StatusEffects;
 import sygfx.ScaledGraphics;
 import java.awt.Color;
 import hatman.mapsolver.Node;
@@ -16,9 +17,18 @@ import sygfx.util.Anchor;
  * @author Serhan Yilmaz <github.com/serhan-yilmaz>
  */
 public class Hatman extends ConcreteBlock{
-
-    public Hatman(double x, double y, double speed, double radius) {
+    private StatusEffects modifiers;
+    
+    public Hatman(double x, double y, double speed, double radius, StatusEffects modifiers) {
         super(x, y, speed, radius);
+        this.modifiers = modifiers;
+    }
+    
+    @Override
+    public boolean cycle(){
+        double current_speed = speed * modifiers.getMovementModifier();
+        moveOnPath(this.path, current_speed);
+        return false;
     }
 
     @Override
@@ -57,7 +67,7 @@ public class Hatman extends ConcreteBlock{
 
     @Override
     public Hatman clone() {
-        return new Hatman(x, y, speed, radius);
+        return new Hatman(x, y, speed, radius, modifiers);
     }
     
 }

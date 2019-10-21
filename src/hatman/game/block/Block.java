@@ -94,6 +94,10 @@ public abstract class Block {
     
     public abstract boolean cycle();
     
+    protected double getDistanceTo(Block target){
+        return getDistanceTo(target.x, target.y);
+    }
+    
     protected double getDistanceTo(int x, int y){
         return getDistanceTo((double) x, (double) y);	
     }	
