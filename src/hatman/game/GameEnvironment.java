@@ -201,11 +201,13 @@ public class GameEnvironment {
             BlackBullet b = itBB.next();
             if(b.isTargetReached(hatman)){
                 player.damage(385);
+                statusEffects.refreshStun(8);
                 itBB.remove();
             }
         }
         
         if(water.isBlockInside(hatman)){
+            player.healPercentage(4.5e-4);
             statusEffects.refreshWaterSlow(10);
         }
         if(water.isBlockInWave(hatman)){

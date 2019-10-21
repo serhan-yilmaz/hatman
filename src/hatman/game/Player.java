@@ -43,8 +43,15 @@ public class Player {
         health += regen;
     }
     
+    public void healPercentage(double d){
+        heal(max_health * d);
+    }
+    
     public void heal(double d){
         health += d;
+        if(health > max_health){
+            health = max_health;
+        }
     }
     
     public void damage(double d){
