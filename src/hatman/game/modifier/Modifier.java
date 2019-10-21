@@ -14,17 +14,18 @@ import sygfx.ScaledGraphics;
  */
 public abstract class Modifier {
     private double remaining_duration = 0;
-    private BufferedImage img;
+    protected final BufferedImage img;
     
     public Modifier(BufferedImage img){
         this.img = img;
     }
     
-    public boolean draw(ScaledGraphics g, int x, int y){
+    public int draw(ScaledGraphics g, int x, int y){
         if(isEnabled()){
             g.drawImage(img, x, y, 25, 25, null);
+            return 1;
         }
-        return isEnabled();
+        return 0;
     }
     
     public final void reset(){

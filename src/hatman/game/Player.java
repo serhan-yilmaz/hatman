@@ -34,6 +34,7 @@ public class Player {
     
     public void cycle(){
         regenerate();
+        damage(modifiers.getDamage());
         if(health > max_health){
             health = max_health;
         }
