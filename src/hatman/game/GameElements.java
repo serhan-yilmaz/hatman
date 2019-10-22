@@ -7,6 +7,7 @@ package hatman.game;
 
 import hatman.game.block.BlackBullet;
 import hatman.game.block.Block;
+import hatman.game.block.Meteor;
 import hatman.game.block.Mine;
 import hatman.game.block.RedBall;
 import hatman.game.spawner.Spawner;
@@ -26,6 +27,7 @@ public class GameElements {
     private final UnorderedArrayList<Spawner> spawners;
     private final UnorderedArrayList<Block> visuals;
     private final UnorderedArrayList<Mine> mines;
+    private final UnorderedArrayList<Meteor> meteors;
     
     public GameElements(){
         redballs = new UnorderedArrayList<>();
@@ -33,6 +35,7 @@ public class GameElements {
         visuals = new UnorderedArrayList<>();
         blackbullets = new UnorderedArrayList<>();
         mines = new UnorderedArrayList<>();
+        meteors = new UnorderedArrayList<>();
     }
     
     public void reset(){
@@ -41,6 +44,7 @@ public class GameElements {
         visuals.clear();
         spawners.clear();
         mines.clear();
+        meteors.clear();
     }
     
     public void addVisuals(Block b){
@@ -60,9 +64,12 @@ public class GameElements {
         blackbullets.add(blackbullet);
     }
     
-    public void addMine(Mine mine)
-    {
+    public void addMine(Mine mine){
         mines.add(mine);
+    }
+    
+    public void addMeteor(Meteor m){
+        meteors.add(m);
     }
     
     public UnorderedArrayList<RedBall> getRedballs(){
@@ -75,6 +82,10 @@ public class GameElements {
     
     public UnorderedArrayList<Mine> getMines(){
         return mines;
+    }
+    
+    public UnorderedArrayList<Meteor> getMeteors(){
+        return meteors;
     }
     
     private void cycleBlocks(UnorderedArrayList<? extends Block> list){
@@ -92,6 +103,7 @@ public class GameElements {
         cycleBlocks(blackbullets);
         cycleBlocks(visuals);
         cycleBlocks(mines);
+        cycleBlocks(meteors);
         
         for(Spawner s: spawners){
             s.cycle();
@@ -111,6 +123,7 @@ public class GameElements {
     
     public void draw(ScaledGraphics g){
         drawBlocks(g, mines);
+        drawBlocks(g, meteors);
         drawBlocks(g, redballs);
         drawBlocks(g, blackbullets);
         
