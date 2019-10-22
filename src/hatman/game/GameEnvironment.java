@@ -9,12 +9,14 @@ import hatman.game.block.BlackBullet;
 import hatman.game.block.Block;
 import hatman.util.FpsCounter;
 import hatman.game.block.Hatman;
+import hatman.game.block.Meteor;
 import hatman.game.block.Mine;
 import hatman.game.block.RedBall;
 import hatman.game.block.Visual;
 import hatman.game.block.WaterBlock;
 import hatman.game.modifier.StatusEffects;
 import hatman.game.spawner.BlackBulletSpawner;
+import hatman.game.spawner.MeteorSpawner;
 import hatman.game.spawner.MineSpawner;
 import hatman.game.spawner.RedBallSpawner;
 import hatman.game.spawner.Spawner;
@@ -95,11 +97,14 @@ public class GameEnvironment {
         bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
         bbspawner.setSpawnPeriod(352);
         
-        Mine mn = new Mine(100, 100, 100);
+        Mine mn = new Mine(0, 0, 100);
         Spawner mnspawner = new Spawner();
         mnspawner.addSpawner(new MineSpawner(size.width, size.height, mn));
         mnspawner.setSpawnPeriod(200);
         
+        Meteor meteor = new Meteor(0, 0, 140, null);
+        Spawner meteorSpawner = new MeteorSpawner(size.width, size.height, meteor);
+        meteorSpawner.setSpawnPeriod(63);
         
         gameElements.addVisuals(new Visual(100, 60, 50));
         gameElements.addVisuals(new Visual(2360, 60, 50));
@@ -110,6 +115,7 @@ public class GameEnvironment {
         gameElements.addSpawner(redballspawner);
         gameElements.addSpawner(bbspawner);
         gameElements.addSpawner(mnspawner);
+        gameElements.addSpawner(meteorSpawner);
         gameover = false;
         System.gc();
     }
@@ -232,6 +238,12 @@ public class GameEnvironment {
                         m2.triggerMine();
                     }
                 }
+            }
+        }
+        
+        for(Meteor m: gameElements.getMeteors()){
+            if(m.isTargetStunned(hatman)){
+                statusEffects.refreshStun(m.getStunDuration());
             }
         }
         

@@ -89,7 +89,6 @@ public abstract class Block {
         return speed;	
     }	
 
-    
     public abstract void draw(ScaledGraphics sg);
     
     public abstract boolean cycle();

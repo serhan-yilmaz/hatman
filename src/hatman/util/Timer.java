@@ -17,6 +17,14 @@ public class Timer {
         this.numCycles = numCycles;
     }
     
+    public void reset(){
+        this.cycle_count = 0;
+    }
+    
+    public double getPeriod(){
+        return numCycles;
+    }
+    
     public void setPeriod(double numCycles){
         this.numCycles = numCycles;
         if(cycle_count > numCycles){
