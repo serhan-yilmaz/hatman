@@ -7,6 +7,7 @@ package hatman.ui;
 
 import hatman.game.GameEnvironment;
 import java.awt.Dimension;
+import java.awt.Point;
 import sygfx.Scale;
 
 /**
@@ -21,6 +22,7 @@ public class PanningController {
     private double panningSpeed = 1.3;
     private double panningRatio = 0.05;
     private boolean panningShift = true;
+    private boolean cameraLock = true;
     
     public PanningController(Dimension resolution, GameEnvironment game){
         this.resolution = resolution;
@@ -40,6 +42,10 @@ public class PanningController {
     }
     
     public void cycle(){
+        if(cameraLock){
+            setPanning(game.getHatmanPosition());
+            return;
+        }
         if(!panningShift){
             return;
         }
@@ -59,7 +65,25 @@ public class PanningController {
         }
     }
     
+    public void toggleCameraLock(boolean b){
+        this.cameraLock = !this.cameraLock;
+    }
+    
+    public void setCameraLock(boolean b){
+        this.cameraLock = b;
+    }
+    
+    public void setPanning(Point p){
+        int x = p.x - resolution.width/2;
+        int y = p.y - resolution.height/2;
+        this.setPanning(x, y, new Dimension(1, 1));
+    }
+    
     public void setPanning(double x, double y){
+        this.setPanning(x, y, resolution);
+    }
+    
+    public void setPanning(double x, double y, Dimension resolution){
         Scale scale = game.getScale();
         scale = scale.setXShift(x, resolution.width);
         scale = scale.setYShift(y, resolution.height);

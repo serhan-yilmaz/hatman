@@ -34,6 +34,7 @@ import hatman.mapsolver.Map;
 import hatman.mapsolver.Path;
 import hatman.util.UnorderedArrayList;
 import java.awt.Font;
+import java.awt.Point;
 import java.util.Iterator;
 import sygfx.Scale;
 import sygfx.ScaledGraphics;
@@ -97,7 +98,7 @@ public class GameEnvironment {
         bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
         bbspawner.setSpawnPeriod(352);
         
-        Mine mn = new Mine(0, 0, 100);
+        Mine mn = new Mine(0, 0, 75);
         Spawner mnspawner = new Spawner();
         mnspawner.addSpawner(new MineSpawner(size.width, size.height, mn));
         mnspawner.setSpawnPeriod(200);
@@ -291,5 +292,10 @@ public class GameEnvironment {
         int difficulty = 0;
         return (int)((double)(4 * gametime) * (0.5D + (double)difficulty * 0.25D));
     }
+    
+    public Point getHatmanPosition(){
+        return hatman.getPosition();
+    }
+    
     
 }

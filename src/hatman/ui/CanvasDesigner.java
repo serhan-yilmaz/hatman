@@ -53,6 +53,9 @@ public class CanvasDesigner {
                 if(s == 'r'){
                     game.reset();
                 }
+                if(s == 'y'){
+                    panning.toggleCameraLock(true);
+                }
             }
 
             @Override
