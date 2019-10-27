@@ -37,8 +37,8 @@ public class Map {
     private int num = 0;
     
     public Map(int width, int height){
-        int x = quantize(width);
-        int y = quantize(height);
+        int x = quantize(width) + 1;
+        int y = quantize(height) + 1;
         obstacle = new boolean[x][];
         passable = new boolean[x][];
         closedSet = new boolean[x][];
