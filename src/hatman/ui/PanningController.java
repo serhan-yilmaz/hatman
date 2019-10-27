@@ -74,8 +74,9 @@ public class PanningController {
     }
     
     public void setPanning(Point p){
-        int x = p.x - resolution.width/2;
-        int y = p.y - resolution.height/2;
+        Scale scale = game.getScale();
+        double x = p.x - 0.5 * resolution.width / scale.getXScaling();
+        double y = p.y - 0.5 * resolution.height / scale.getYScaling();
         this.setPanning(x, y, new Dimension(1, 1));
     }
     
