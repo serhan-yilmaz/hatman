@@ -18,6 +18,8 @@ import sygfx.Scale;
 import sygfx.ui.JCanvas;
 import sygfx.ui.Window;
 import sygfx.ui.layout.FlowLayout;
+import sygfx.ui.layout.FreeLayout;
+import sygfx.util.Anchor;
 
 /**
  *
@@ -50,6 +52,9 @@ public class CanvasDesigner {
                 }
                 if(s == 'r'){
                     game.reset();
+                }
+                if(s == 'y'){
+                    panning.toggleCameraLock(true);
                 }
             }
 
@@ -122,9 +127,13 @@ public class CanvasDesigner {
         minimapCanvas.setGameEnvironment(game);
         uicanvas.setGameEnvironment(game);
         
+        UserInterfaceDesigner.design(uicanvas);
+        
         window.add(gameCanvas);
         window.add(minimapCanvas);
         window.add(uicanvas);
+        window.setLayout(new FreeLayout(Anchor.NORTHWEST));
+        window.pack();
     }
     
 }

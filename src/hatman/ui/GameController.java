@@ -6,6 +6,7 @@
 package hatman.ui;
 
 import hatman.game.GameEnvironment;
+import hatman.util.Timer;
 import java.awt.Dimension;
 
 /**
