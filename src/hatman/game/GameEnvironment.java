@@ -12,8 +12,10 @@ import hatman.game.block.Hatman;
 import hatman.game.block.Meteor;
 import hatman.game.block.Mine;
 import hatman.game.block.RedBall;
+import hatman.game.block.Sparkle;
 import hatman.game.block.Visual;
 import hatman.game.block.WaterBlock;
+import hatman.game.block.Witch;
 import hatman.game.modifier.StatusEffects;
 import hatman.game.spawner.BlackBulletSpawner;
 import hatman.game.spawner.MeteorSpawner;
@@ -50,7 +52,6 @@ public class GameEnvironment {
     private GameMapVisuals mapVisuals;
     private StatusEffects statusEffects;
     private Hatman hatman;
-    private AtomicBoolean busyFlag = new AtomicBoolean(false);
     private Scale gameScale = Scale.UNITY;
     private FpsCounter fpsCounter = new FpsCounter(50);
     private SpeedCalculator speedCalculator;
@@ -60,6 +61,7 @@ public class GameEnvironment {
     private boolean gameover = false;
     private int gametime = 0;
     private WaterBlock water;
+    private Witch witch;
     
     public GameEnvironment(int width, int height){
         this.size = new Dimension(width, height);
@@ -81,6 +83,8 @@ public class GameEnvironment {
         gameElements.reset();
         statusEffects.reset();
         player.reset();
+        
+        witch = new Witch(200, 800, 1.925, 20, hatman, map, player);
         
         RedBall prototype = new RedBall(0, 0, 3.52, 10, hatman);
         Spawner redballspawner = new Spawner();
@@ -126,11 +130,10 @@ public class GameEnvironment {
     }
     
     public void drawGameGraphics(ScaledGraphics sg){
-//        fpsCounter.count();
-        
         mapVisuals.draw(sg);
         gameElements.drawVisuals(sg);
         water.draw(sg);
+        witch.draw(sg);
         hatman.draw(sg);
         gameElements.draw(sg);
     }
@@ -161,13 +164,13 @@ public class GameEnvironment {
     }
     
     public void moveHatman(int x, int y){
-        if(busyFlag.compareAndSet(false, true)){
+        if(map.reserve()){
             Path path = map.solve(hatman.getX(), hatman.getY(), x, y);
             if(path != null){
                 path.poll();
                 hatman.move(path);
             }
-            busyFlag.set(false);
+            map.release();
         }
     }
     
@@ -201,9 +204,15 @@ public class GameEnvironment {
         
         hatman.cycle();
         water.cycle();
+        witch.cycle();
 //        speedCalculator.cycle();
         gameElements.cycle();
         statusEffects.cycle();
+        
+        Sparkle sparkle = witch.spawnSparkle();
+        if(sparkle != null){
+            gameElements.addVisuals(sparkle);
+        }
         
         Iterator<RedBall> iterator = gameElements.getRedballs().iterator();
         while(iterator.hasNext()){

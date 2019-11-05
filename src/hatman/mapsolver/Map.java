@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import hatman.mapsolver.FibonacciHeap.Entry;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Map {
     private final Node[][] fScore;
     private final Node[][] cameFrom;
     private final double[][] gScore;
+    private AtomicBoolean busyFlag = new AtomicBoolean(false);
     
     private long total = 0;
     private int num = 0;
@@ -175,6 +177,14 @@ public class Map {
                 }
             }
         }
+    }
+    
+    public boolean reserve(){
+        return busyFlag.compareAndSet(false, true);
+    }
+    
+    public void release(){
+        busyFlag.set(false);
     }
     
     public boolean isOccupied(int x, int y){
