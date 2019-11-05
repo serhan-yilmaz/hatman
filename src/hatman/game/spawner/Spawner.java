@@ -17,7 +17,7 @@ import sygfx.ScaledGraphics;
  */
 public class Spawner {
     protected final ArrayList<Spawner> children = new ArrayList<>();
-    protected final Point position;
+    protected Point position;
     protected GameElements gameElements;
     private Timer timer;
     
@@ -78,6 +78,10 @@ public class Spawner {
     
     public void spawn(){
         
+    }
+    
+    public void setPosition(int x, int y){
+        this.position = new Point(x, y);
     }
     
     

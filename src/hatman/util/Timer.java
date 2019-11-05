@@ -32,6 +32,14 @@ public class Timer {
         }
     }
     
+    public void setRemainingTime(double numCycles){
+        this.cycle_count = this.getPeriod() - numCycles;
+    }
+    
+    public int getRemainingTime(){
+        return (int) Math.ceil(this.getPeriod() - cycle_count);
+    }
+    
     public boolean cycle(){
         cycle_count++;
         if(cycle_count >= numCycles){

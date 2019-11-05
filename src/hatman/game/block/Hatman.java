@@ -65,6 +65,10 @@ public class Hatman extends ConcreteBlock{
         return (int) Math.round(cost);
     }
 
+    public StatusEffects getStatusEffects(){
+        return modifiers;
+    }
+    
     @Override
     public Hatman clone() {
         return new Hatman(x, y, speed, radius, modifiers);

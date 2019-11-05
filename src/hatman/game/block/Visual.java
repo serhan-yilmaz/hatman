@@ -35,7 +35,7 @@ public class Visual extends Block{
     }
 
     @Override
-    public Block clone() {
+    public Visual clone() {
         return new Visual(x, y, radius);
     }
     
