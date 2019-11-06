@@ -41,14 +41,16 @@ public class Timer {
     }
     
     public boolean cycle(){
-        cycle_count++;
+        return cycle(1);
+    }
+    
+    public boolean cycle(double d){
+        cycle_count += d;
         if(cycle_count >= numCycles){
             cycle_count -= numCycles;
             return true;
         }
         return false;
     }
-    
-    
     
 }
