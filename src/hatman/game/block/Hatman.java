@@ -27,7 +27,7 @@ public class Hatman extends ConcreteBlock{
     @Override
     public boolean cycle(){
         double current_speed = speed * modifiers.getMovementModifier();
-        moveOnPath(this.path, current_speed);
+        moveTowardsPath(this.path, current_speed);
         return false;
     }
 
