@@ -17,12 +17,14 @@ import sygfx.util.Anchor;
 public class StatusEffects {
     private ArrayList<Modifier> modifiers = new ArrayList<>();
 
+    private Slow witch_slow = new Slow(0.1, ResourceManager.witch_slow);
     private Slow water_slow = new Slow(0.1, ResourceManager.ice_icon);
     private Slow wave_slow = new Slow(0.4, ResourceManager.wave_icon);
     private Stun stun = new Stun(ResourceManager.stun_icon);
     private Burn flame = new Burn(ResourceManager.flame_icon);
 
     public StatusEffects(){
+        modifiers.add(witch_slow);
         modifiers.add(water_slow);
         modifiers.add(wave_slow);
         modifiers.add(stun);
@@ -39,6 +41,10 @@ public class StatusEffects {
     
     public void refreshStun(double duration){
         stun.refresh(duration);
+    }
+    
+    public void refreshWitchSlow(double duration){
+        witch_slow.refresh(duration);
     }
     
     public void refreshWaterSlow(double duration){
@@ -74,7 +80,8 @@ public class StatusEffects {
     public double getMovementModifier(){
         return water_slow.getMovementModifier()
                * wave_slow.getMovementModifier()
-               * stun.getMovementModifier();
+               * stun.getMovementModifier()
+               * witch_slow.getMovementModifier();
     }
     
     public double getDamage(){

@@ -24,6 +24,7 @@ public class ResourceManager {
     public static BufferedImage mine_visual_triggered;
     public static BufferedImage witch_hat;
     public static BufferedImage witch_sparkle;
+    public static BufferedImage witch_slow;
     
     public static void initialize(){
         for (int i = 0; i < 3; i++) {
@@ -37,6 +38,7 @@ public class ResourceManager {
         mine_visual_triggered = readImage("/resources/images/mine_icon2.png");
         witch_hat = readImage("/resources/images/witchhat.png");
         witch_sparkle =  readImage("/resources/images/sparkles/sparkle.png");
+        witch_slow =  readImage("/resources/images/modifiers/witch_slow.png");
     }
     
     public static BufferedImage readImage(String path){

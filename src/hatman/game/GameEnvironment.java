@@ -219,7 +219,7 @@ public class GameEnvironment {
             RedBall r = iterator.next();
             if(r.isTargetReached()){
                 statusEffects.inflictFlame(0.3);
-                player.damage(355);
+                player.damage(295);
                 iterator.remove();
             }
         }
@@ -230,6 +230,9 @@ public class GameEnvironment {
             if(b.isTargetReached(hatman)){
                 player.damage(385);
                 statusEffects.refreshStun(8);
+                itBB.remove();
+            } else if(b.isTargetReached(witch)){
+                witch.rageWitch();
                 itBB.remove();
             }
         }
@@ -258,6 +261,9 @@ public class GameEnvironment {
             if(m.isTargetStunned(hatman)){
                 statusEffects.refreshStun(m.getStunDuration());
             }
+            if(m.isTargetStunned(witch)){
+                witch.getModifiers().refreshStun(m.getStunDuration());
+            }
         }
         
         if(water.isBlockInside(hatman)){
@@ -266,8 +272,17 @@ public class GameEnvironment {
             statusEffects.extinguishFlame(0.02);
         }
         
+        if(water.isBlockInWave(witch)){
+            witch.getModifiers().refreshWaterSlow(10);
+            witch.setWitchSlow(true);
+        }
+        
         if(water.isBlockInWave(hatman)){
             statusEffects.refreshWaveSlow(10);
+        }
+        
+        if(water.isBlockInWave(witch)){
+            witch.getModifiers().refreshWaveSlow(10);
         }
         
         player.cycle();
