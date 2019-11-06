@@ -24,7 +24,7 @@ public abstract class ConcreteBlock extends Block{
         this.path = p;
     }
     
-    protected void moveOnPath(Path path, double remain){
+    protected void moveTowardsPath(Path path, double remain){
         if(path != null){
             while(remain > 0 && !path.isEmpty()){
                 Node n = path.peek();
@@ -34,6 +34,24 @@ public abstract class ConcreteBlock extends Block{
                 }
             }
         }
+    }
+    
+    protected double moveOnPath(Path path, double remain){
+        if(path == null){
+            return 0;
+        }
+        while(remain > 0 && !path.isEmpty()){
+            Node n = path.peek();
+            if(getDistanceTo(n.getX(), n.getY()) <= remain){
+                remain = moveThrough(n.getX(), n.getY(), remain);
+            } else {
+                break;
+            }
+            if(n.getX() == x && n.getY() == y){
+                path.poll();
+            }
+        }
+        return remain;
     }
     
     public Path getPath(){

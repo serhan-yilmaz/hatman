@@ -42,9 +42,11 @@ public class Witch extends ConcreteBlock{
     private Player player;
     private StatusEffects statusEffects;
     private final Color color = new Color(128, 0, 128);
-    private Timer timer = new Timer(25);
+    private Timer timer = new Timer(50);
     private Timer charge_timer = new Timer(CHARGE_DURATİON);
     private int status = STATUS_IDLE;
+    
+    private double remaining_speed = 0;
     
     public Witch(double x, double y, double speed, double radius, 
             Hatman target, Map map, Player player) {
@@ -74,7 +76,6 @@ public class Witch extends ConcreteBlock{
         sg.setAnchor(Anchor.CENTER);
         sg.setColor(color);
         sg.fillOval(x, y, 2 * radius, 2 * radius);
-        sg.setColor(Color.black);
         sg.drawOval(x, y, 2 * TRIGGER_RADIUS, 2 * TRIGGER_RADIUS);
         if(status == STATUS_CHARGING){
             double remain = charge_timer.getRemainingTime();
@@ -82,7 +83,7 @@ public class Witch extends ConcreteBlock{
             int red = (int) (120 + ratio * 110);
             int alpha = (int) (101 + ratio * 88);
             sg.setColor(new Color(red, 50, 35, alpha));
-            sg.fillOval(x, y, 2 * TRIGGER_RADIUS, 2 * TRIGGER_RADIUS);
+            sg.fillOval(x, y, 2 * TRIGGER_RADIUS-2, 2 * TRIGGER_RADIUS-2);
         }
         if(status == STATUS_EXPLOSION){
             sg.setColor(EXPLOSION_COLOR);
@@ -95,14 +96,13 @@ public class Witch extends ConcreteBlock{
     public boolean cycle() {
         if(timer.cycle()){
             if(map.reserve()){
+                map.requestFullPath();
                 Path path = map.solve((int) x, (int) y, (int) target.x, (int) target.y);
                 if(path != null){
                     path.poll();
                     this.move(path);
                 }
                 map.release();
-            } else {
-                timer.setRemainingTime(2);
             }
         }
         switch(status){
@@ -112,7 +112,10 @@ public class Witch extends ConcreteBlock{
                     charge_timer.reset();
                     charge_timer.setPeriod(CHARGE_DURATİON);
                 } else {
-                    moveOnPath(this.path, this.speed);
+                    remaining_speed += this.speed;
+                    if(Math.random() < 0.4 + 0.2 * remaining_speed/speed){
+                        remaining_speed = moveOnPath(this.path, remaining_speed);
+                    }
                 }
                 break;
             case STATUS_CHARGING:

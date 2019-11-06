@@ -16,7 +16,7 @@ import sygfx.util.Anchor;
  * @author ahmet
  */
 public class Mine extends TransientBlock{
-    private static final int EXPLOSION_RADIUS = 160;
+    private static final int EXPLOSION_RADIUS = 140;
     private static final int EXPLOSION_COUNTDOWN_TIME = 35;
     private static final int EXPLOSION_GAP = 40;
     

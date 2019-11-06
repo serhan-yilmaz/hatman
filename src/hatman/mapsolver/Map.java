@@ -38,6 +38,8 @@ public class Map {
     private long total = 0;
     private int num = 0;
     
+    private boolean fullPathFlag = false;
+    
     public Map(int width, int height){
         int x = quantize(width) + 1;
         int y = quantize(height) + 1;
@@ -249,8 +251,14 @@ public class Map {
         return null;
     }
     
+    public void requestFullPath(){
+        fullPathFlag = true;
+    }
+    
     public Path solve(int startX, int startY, int endX, int endY){
-        return solveAStar(startX,startY,endX,endY);
+        Path path = solveAStar(startX,startY,endX,endY);
+        fullPathFlag = false;
+        return path;
     }
     
     private Path solveAStar(int startX, int startY, int endX, int endY){
@@ -369,7 +377,6 @@ public class Map {
         return true;
     }
     
-    
     private boolean checkInnerObstacles(Node current, Node move){
         boolean b = false;
         double t = Math.floor(1 + QUANTIZATION_FACTOR * move.getCost() / 28);
@@ -433,6 +440,16 @@ public class Map {
         }
         previous = new Node(startX, startY);
         previous.setCost(0d);
+        if(fullPathFlag){
+            for(int i = temp.size() - 2; i >= 0; i--){
+                Node n = temp.get(i);
+                previous = n;
+                double cost = getDistanceTo(n.getX(), n.getY(), previous.getX(), previous.getY());
+                n.setCost(cost);
+                n.setParent(previous);
+                path.append(previous);
+            }
+        }
 //        path.append(previous);
         for(int i = temp.size() - 2; i >= 1; i--){
             Node n = temp.get(i);

@@ -84,7 +84,7 @@ public class GameEnvironment {
         statusEffects.reset();
         player.reset();
         
-        witch = new Witch(200, 800, 1.925, 20, hatman, map, player);
+        witch = new Witch(200, 800, 1.25, 20, hatman, map, player);
         
         RedBall prototype = new RedBall(0, 0, 3.52, 10, hatman);
         Spawner redballspawner = new Spawner();
@@ -102,7 +102,7 @@ public class GameEnvironment {
         bbspawner.addSpawner(new BlackBulletSpawner(2360, 1380, bb, hatman));
         bbspawner.setSpawnPeriod(352);
         
-        Mine mn = new Mine(0, 0, 75);
+        Mine mn = new Mine(0, 0, 60);
         Spawner mnspawner = new Spawner();
         mnspawner.addSpawner(new MineSpawner(size.width, size.height, mn));
         mnspawner.setSpawnPeriod(200);
@@ -236,6 +236,9 @@ public class GameEnvironment {
         
         for(Mine m: gameElements.getMines()){
             if(m.isTargetReached(hatman)){
+                m.triggerMine();
+            }
+            if(m.isTargetReached(witch)){
                 m.triggerMine();
             }
             if(m.isTargetExploded(hatman)){
