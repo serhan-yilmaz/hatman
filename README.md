@@ -12,6 +12,6 @@ An indie game made in java with 2D graphics. The aim is to survive as long as po
 - Meteors that randomly fall down and stun you.
 - And many more...
 
-*Remember:* No matter what you need to keep moving!
+*Hint:* No matter what you need to keep moving!
 
 
