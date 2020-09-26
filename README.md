@@ -14,4 +14,9 @@ An indie game made in java with 2D graphics. The aim is to survive as long as po
 
 *Hint:* No matter what you need to keep moving!
 
+### Achievements (Hats)
+Unlock various hats as you complete secret achievement and fill your hall of hats:
 
+<img src="images/hatman_01.png" width="500">
+
+*Hint:* Some of them comes with special effects!
