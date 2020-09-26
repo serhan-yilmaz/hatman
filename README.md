@@ -3,7 +3,7 @@ An indie game made in java with 2D graphics. The aim is to survive as long as po
 
 <b> Try to survive as long as possible while running from hazards that get increasingly more difficult: </b>
 
-<img src="images/hatman_04.png" width="400"> <img src="images/hatman_14.png" width="400">
+<img src="images/hatman_04.png" width="350"> <img src="images/hatman_14.png" width="350">
 
 ### Hazards in the game
 - Red balls that float around and chase you.
